@@ -9,6 +9,8 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strings"
+	"container/list"
 )
 
 var db *sql.DB
@@ -59,7 +61,7 @@ func loadConfig() {
 }
 
 func loadServer() {
-	fmt.Print("Starting web server on localhost...")
+	fmt.Print("Starting web server on localhost...\n")
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		/*var err error
 		_, err = db.Exec("insert into admins(ServerName, Name, Password, Vhost) values('tesztszerver', 'tesztName', 'tesztpassword', 'tesztVhost')")
@@ -75,16 +77,23 @@ func loadServer() {
 		}
 		defer rows.Close()
 
-		var name string
+		var namelist = list.New()
 		for rows.Next() {
+			var name string
 			rows.Scan(&name)
-			break
+			namelist.PushBack(name)
+		}
+
+		var names []string
+
+		for e := namelist.Front(); e != nil; e = e.Next() {
+			names = append(names, e.Value.(string))
 		}
 
 		t, _ := template.ParseFiles("www/index.html")
-		p := &Page{Title: "Schumix WebAdmin", Body: name}
+		p := &Page{Title: "Schumix WebAdmin", Body: strings.Join(names, ", ")}
 		t.Execute(w, p)
 	})
-	fmt.Print("Done. Serving...")
+	fmt.Print("Done. Serving...\n")
 	http.ListenAndServe(":45987", nil)
 }
