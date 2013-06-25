@@ -16,7 +16,7 @@ var config map[string]interface{}
 
 type Page struct {
 	Title string
-	Body  []byte
+	Body  string
 }
 
 func main() {
@@ -61,18 +61,28 @@ func loadConfig() {
 func loadServer() {
 	fmt.Print("Starting web server on localhost...")
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		t, _ := template.ParseFiles("www/index.html")
-		rows, err := db.Query("SELECT name FROM admins")
+		/*var err error
+		_, err = db.Exec("insert into admins(ServerName, Name, Password, Vhost) values('tesztszerver', 'tesztName', 'tesztpassword', 'tesztVhost')")
 		if err != nil {
-			panic(err)
+			fmt.Println(err)
+			return
+		}*/
+
+		rows, err := db.Query("select Name from admins")
+		if err != nil {
+			fmt.Println(err)
+			return
 		}
 		defer rows.Close()
+
 		var name string
 		for rows.Next() {
 			rows.Scan(&name)
+			break
 		}
-		rows.Close()
-		p := &Page{Title: "Schumix WebAdmin"}
+
+		t, _ := template.ParseFiles("www/index.html")
+		p := &Page{Title: "Schumix WebAdmin", Body: name}
 		t.Execute(w, p)
 	})
 	fmt.Print("Done. Serving...")
