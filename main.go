@@ -25,7 +25,7 @@ func main() {
 	loadConfig()
 	db = connectToSql()
 	defer db.Close()
-	loadServer()
+	loadServer(":45987")
 }
 
 func connectToSql() *sql.DB {
@@ -60,8 +60,8 @@ func loadConfig() {
 	}
 }
 
-func loadServer() {
-	fmt.Print("Starting web server on localhost...\n")
+func loadServer(port string) {
+	fmt.Print("Starting web server on localhost", port, "...\n")
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		/*var err error
 		_, err = db.Exec("insert into admins(ServerName, Name, Password, Vhost) values('tesztszerver', 'tesztName', 'tesztpassword', 'tesztVhost')")
@@ -96,5 +96,5 @@ func loadServer() {
 	})
 	fmt.Print("Done. Serving...\n")
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("www/static/"))))
-	http.ListenAndServe(":45987", nil)
+	http.ListenAndServe(port, nil)
 }
