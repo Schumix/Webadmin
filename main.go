@@ -95,5 +95,6 @@ func loadServer() {
 		t.Execute(w, p)
 	})
 	fmt.Print("Done. Serving...\n")
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("www/static/"))))
 	http.ListenAndServe(":45987", nil)
 }
