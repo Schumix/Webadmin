@@ -1,6 +1,7 @@
 package main
 
 import (
+	"container/list"
 	"database/sql"
 	"encoding/json"
 	"fmt"
@@ -10,7 +11,6 @@ import (
 	"net/http"
 	"os"
 	"strings"
-	"container/list"
 )
 
 var db *sql.DB
