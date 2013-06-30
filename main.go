@@ -99,6 +99,16 @@ func loadServer(port string) {
 		p := &Page{Title: "Login - Schumix Webadmin"}
 		t.Execute(w, p)
 	})
+	http.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
+		t, _ := template.ParseFiles("www/about.html")
+		p := &Page{Title: "About - Schumix Webadmin"}
+		t.Execute(w, p)
+	})
+	http.HandleFunc("/stats", func(w http.ResponseWriter, r *http.Request) {
+		t, _ := template.ParseFiles("www/stats.html")
+		p := &Page{Title: "Stats - Schumix Webadmin"}
+		t.Execute(w, p)
+	})
 	fmt.Print("Done. Serving...\n")
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("www/static/"))))
 	http.ListenAndServe(port, nil)
