@@ -1,7 +1,7 @@
 package main
 
 import (
-	"container/list"
+	//"container/list"
 	"database/sql"
 	"encoding/json"
 	"fmt"
@@ -10,7 +10,7 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"strings"
+	//"strings"
 )
 
 var db *sql.DB
@@ -70,7 +70,7 @@ func loadServer(port string) {
 			return
 		}*/
 
-		rows, err := db.Query("select Name from admins")
+		/*rows, err := db.Query("select Name from admins")
 		if err != nil {
 			fmt.Println(err)
 			return
@@ -88,25 +88,25 @@ func loadServer(port string) {
 
 		for e := namelist.Front(); e != nil; e = e.Next() {
 			names = append(names, e.Value.(string))
-		}
+		}*/
 
-		t, _ := template.ParseFiles("www/index.html")
-		p := &Page{Title: "Schumix Webadmin", Body: strings.Join(names, ", ")}
+		t, _ := template.New("index.tpl").ParseFiles("www/template/header.tpl", "www/template/footer.tpl", "www/index.tpl")
+		p := Page{Title: "Shumix Webadmin", Body: "works"}
 		t.Execute(w, p)
 	})
 	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
-		t, _ := template.ParseFiles("www/signin.html")
-		p := &Page{Title: "Login - Schumix Webadmin"}
+		t, _ := template.New("signin.tpl").ParseFiles("www/template/header.tpl", "www/template/footer.tpl", "www/signin.tpl")
+		p := Page{Title: "Login - Schumix Webserver", Body: "works"}
 		t.Execute(w, p)
 	})
 	http.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
-		t, _ := template.ParseFiles("www/about.html")
-		p := &Page{Title: "About - Schumix Webadmin"}
+		t, _ := template.New("about.tpl").ParseFiles("www/template/header.tpl", "www/template/footer.tpl", "www/about.tpl")
+		p := Page{Title: "About - Schumix Webserver", Body: "works"}
 		t.Execute(w, p)
 	})
 	http.HandleFunc("/stats", func(w http.ResponseWriter, r *http.Request) {
-		t, _ := template.ParseFiles("www/stats.html")
-		p := &Page{Title: "Stats - Schumix Webadmin"}
+		t, _ := template.New("stats.tpl").ParseFiles("www/template/header.tpl", "www/template/footer.tpl", "www/stats.tpl")
+		p := Page{Title: "Public Stats - Schumix Webserver", Body: "works"}
 		t.Execute(w, p)
 	})
 	fmt.Print("Done. Serving...\n")
