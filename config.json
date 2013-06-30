@@ -1,3 +1,4 @@
 {
-	"filelocation" : "Schumix.db3"
+	"filelocation" : "Schumix.db3",
+	"port" : "45987"
 }

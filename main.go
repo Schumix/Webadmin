@@ -25,7 +25,7 @@ func main() {
 	loadConfig()
 	db = connectToSql()
 	defer db.Close()
-	loadServer(":45987")
+	loadServer(":" + config["port"].(string))
 }
 
 func connectToSql() *sql.DB {
