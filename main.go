@@ -91,7 +91,12 @@ func loadServer(port string) {
 		}
 
 		t, _ := template.ParseFiles("www/index.html")
-		p := &Page{Title: "Schumix WebAdmin", Body: strings.Join(names, ", ")}
+		p := &Page{Title: "Schumix Webadmin", Body: strings.Join(names, ", ")}
+		t.Execute(w, p)
+	})
+	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
+		t, _ := template.ParseFiles("www/signin.html")
+		p := &Page{Title: "Login - Schumix Webadmin"}
 		t.Execute(w, p)
 	})
 	fmt.Print("Done. Serving...\n")
