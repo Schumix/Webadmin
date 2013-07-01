@@ -3,7 +3,7 @@
 
       <!-- Jumbotron -->
       <div class="jumbotron">
-        <h1>Teszt!</h1>
+        <h1>Test!</h1>
         <p class="lead">Test,Test,Test,Test,Test,Test,Test,Test,Test,Test,Test,Test,Test,Test,Test,Test,Test,Test</p>
         <a class="btn btn-large btn-success" href="#">Get started today</a>
       </div>

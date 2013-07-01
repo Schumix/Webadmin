@@ -119,7 +119,7 @@ func HandleDefaultFunc(w http.ResponseWriter, r *http.Request, filename string, 
 	t.Execute(w, p)
 }
 
-func HandleFunc(w http.ResponseWriter, r *http.Request, page Page, filename string, filelocation string, title string, pagename string) {
+func HandleFunc(w http.ResponseWriter, r *http.Request, page Page, filename string, filelocation string) {
 	t, _ := template.New(filename).Funcs(
 			template.FuncMap { 
                        		"eq": func(a, b string) bool { 
