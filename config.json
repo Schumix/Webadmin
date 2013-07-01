@@ -2,5 +2,6 @@
 	"ProjectName" : "Schumix Webadmin",
 	"Title" : "Schumix Webadmin",
 	"SQLiteFile" : "Schumix.db3",
-	"Port" : "45987"
+	"Port" : "45987",
+	"WebDir" : "www"
 }

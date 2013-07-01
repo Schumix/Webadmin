@@ -92,48 +92,42 @@ func loadServer(port string) {
 			names = append(names, e.Value.(string))
 		}*/
 
-		t, _ := template.New("index.tpl").Funcs(
-				template.FuncMap { 
-                        		"eq": func(a, b string) bool { 
-                                		return a == b 
-                        		},
-			}).ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/index.tpl", "www/template/footer.tpl")
-		p := PageSettings("Home", "home")
-		t.Execute(w, p)
+		HandleDefaultFunc(w, r, "index.tpl", "index.tpl", "Home", "home")
 	})
 	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
-		t, _ := template.New("login.tpl").Funcs(
-				template.FuncMap { 
-                        		"eq": func(a, b string) bool { 
-                                		return a == b 
-                        		},
-			}).ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/login.tpl", "www/template/footer.tpl")
-		p := PageSettings("Login", "login")
-		t.Execute(w, p)
+		HandleDefaultFunc(w, r, "login.tpl", "login.tpl", "Login", "login")
 	})
 	http.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
-		t, _ := template.New("about.tpl").Funcs(
-				template.FuncMap { 
-                        		"eq": func(a, b string) bool { 
-                                		return a == b 
-                        		},
-			}).ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/about.tpl", "www/template/footer.tpl")
-		p := PageSettings("About", "about")
-		t.Execute(w, p)
+		HandleDefaultFunc(w, r, "about.tpl", "about.tpl", "About", "about")
 	})
 	http.HandleFunc("/stats", func(w http.ResponseWriter, r *http.Request) {
-		t, _ := template.New("stats.tpl").Funcs(
-				template.FuncMap { 
-                        		"eq": func(a, b string) bool { 
-                                		return a == b 
-                        		},
-			}).ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/stats.tpl", "www/template/footer.tpl")
-		p := PageSettings("Public Stats", "stats")
-		t.Execute(w, p)
+		HandleDefaultFunc(w, r, "stats.tpl", "stats.tpl", "Public Stats", "stats")
 	})
 	fmt.Print("Done. Serving...\n")
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("www/static/"))))
 	http.ListenAndServe(port, nil)
+}
+
+func HandleDefaultFunc(w http.ResponseWriter, r *http.Request, filename string, filelocation string, title string, pagename string) {
+	t, _ := template.New(filename).Funcs(
+			template.FuncMap { 
+                       		"eq": func(a, b string) bool { 
+                               		return a == b 
+                       		},
+		}).ParseFiles(config["WebDir"].(string) + "/template/header.tpl", config["WebDir"].(string) + "/template/menu.tpl", config["WebDir"].(string) + "/" + filelocation, config["WebDir"].(string) + "/template/footer.tpl")
+	p := PageSettings(title, pagename)
+	t.Execute(w, p)
+}
+
+func HandleFunc(w http.ResponseWriter, r *http.Request, page Page, filename string, filelocation string, title string, pagename string) {
+	t, _ := template.New(filename).Funcs(
+			template.FuncMap { 
+                       		"eq": func(a, b string) bool { 
+                               		return a == b 
+                       		},
+		}).ParseFiles(config["WebDir"].(string) + "/template/header.tpl", config["WebDir"].(string) + "/template/menu.tpl", config["WebDir"].(string) + "/" + filelocation, config["WebDir"].(string) + "/template/footer.tpl")
+	p := page
+	t.Execute(w, p)
 }
 
 func PageSettings(title string, pagename string) Page {
