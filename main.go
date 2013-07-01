@@ -102,12 +102,12 @@ func loadServer(port string) {
 		t.Execute(w, p)
 	})
 	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
-		t, _ := template.New("signin.tpl").Funcs(
+		t, _ := template.New("login.tpl").Funcs(
 				template.FuncMap { 
                         		"eq": func(a, b string) bool { 
                                 		return a == b 
                         		},
-			}).ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/signin.tpl", "www/template/footer.tpl")
+			}).ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/login.tpl", "www/template/footer.tpl")
 		p := PageSettings("Login", "login")
 		t.Execute(w, p)
 	})
