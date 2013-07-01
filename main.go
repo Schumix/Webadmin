@@ -25,12 +25,12 @@ func main() {
 	loadConfig()
 	db = connectToSql()
 	defer db.Close()
-	loadServer(":" + config["port"].(string))
+	loadServer(":" + config["Port"].(string))
 }
 
 func connectToSql() *sql.DB {
 	var err error
-	db, err = sql.Open("sqlite3", "Schumix.db3")
+	db, err = sql.Open("sqlite3", config["SQLiteFile"].(string))
 	if err != nil {
 		fmt.Println(err)
 		return nil
@@ -90,23 +90,23 @@ func loadServer(port string) {
 			names = append(names, e.Value.(string))
 		}*/
 
-		t, _ := template.New("index.tpl").ParseFiles("www/template/menu.tpl", "www/template/header.tpl", "www/template/footer.tpl", "www/index.tpl")
-		p := Page{Title: "Shumix Webadmin", Body: "works"}
+		t, _ := template.New("index.tpl").ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/index.tpl", "www/template/footer.tpl")
+		p := Page{Title: config["Title"].(string), Body: "works"}
 		t.Execute(w, p)
 	})
 	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
-		t, _ := template.New("signin.tpl").ParseFiles("www/template/menu.tpl", "www/template/header.tpl", "www/template/footer.tpl", "www/signin.tpl")
-		p := Page{Title: "Login - Schumix Webserver", Body: "works"}
+		t, _ := template.New("signin.tpl").ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/signin.tpl", "www/template/footer.tpl")
+		p := Page{Title: "Login - " + config["Title"].(string), Body: "works"}
 		t.Execute(w, p)
 	})
 	http.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
-		t, _ := template.New("about.tpl").ParseFiles("www/template/menu.tpl", "www/template/header.tpl", "www/template/footer.tpl", "www/about.tpl")
-		p := Page{Title: "About - Schumix Webserver", Body: "works"}
+		t, _ := template.New("about.tpl").ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/about.tpl", "www/template/footer.tpl")
+		p := Page{Title: "About - " + config["Title"].(string), Body: "works"}
 		t.Execute(w, p)
 	})
 	http.HandleFunc("/stats", func(w http.ResponseWriter, r *http.Request) {
-		t, _ := template.New("stats.tpl").ParseFiles("www/template/menu.tpl", "www/template/header.tpl", "www/template/footer.tpl", "www/stats.tpl")
-		p := Page{Title: "Public Stats - Schumix Webserver", Body: "works"}
+		t, _ := template.New("stats.tpl").ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/stats.tpl", "www/template/footer.tpl")
+		p := Page{Title: "Public Stats - " + config["Title"].(string), Body: "works"}
 		t.Execute(w, p)
 	})
 	fmt.Print("Done. Serving...\n")

@@ -1,4 +1,6 @@
 {
-	"filelocation" : "Schumix.db3",
-	"port" : "45987"
+	"ProjectName" : "Schumix Webadmin",
+	"Title" : "Schumix Webadmin",
+	"SQLiteFile" : "Schumix.db3",
+	"Port" : "45987"
 }
