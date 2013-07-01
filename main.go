@@ -104,7 +104,7 @@ func loadServer(port string) {
 		HandleDefaultFunc(w, r, "stats.tpl", "stats.tpl", "Public Stats", "stats")
 	})
 	fmt.Print("Done. Serving...\n")
-	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("www/static/"))))
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir(config["WebDir"].(string) + "/static/"))))
 	http.ListenAndServe(port, nil)
 }
 
