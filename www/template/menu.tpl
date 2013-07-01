@@ -5,10 +5,10 @@
           <div class="navbar-inner">
             <div class="container">
               <ul class="nav">
-                <li class="active"><a href="/">Home</a></li>
-                <li><a href="/stats">Statistics</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/login">Login</a></li>
+                <li{{ if eq .PageName "home" }} class="active"{{ end }}><a href="/">Home</a></li>
+                <li{{ if eq .PageName "stats" }} class="active"{{ end }}><a href="/stats">Statistics</a></li>
+                <li{{ if eq .PageName "about" }} class="active"{{ end }}><a href="/about">About</a></li>
+                <li{{ if eq .PageName "login" }} class="active"{{ end }}><a href="/login">Login</a></li>
               </ul>
             </div>
           </div>

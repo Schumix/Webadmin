@@ -20,6 +20,7 @@ type Page struct {
 	Title        string
 	Body         string
 	ProjectName  string
+	PageName     string
 }
 
 func main() {
@@ -91,23 +92,43 @@ func loadServer(port string) {
 			names = append(names, e.Value.(string))
 		}*/
 
-		t, _ := template.New("index.tpl").ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/index.tpl", "www/template/footer.tpl")
-		p := PageSettings("Home")
+		t, _ := template.New("index.tpl").Funcs(
+				template.FuncMap { 
+                        		"eq": func(a, b string) bool { 
+                                		return a == b 
+                        		},
+			}).ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/index.tpl", "www/template/footer.tpl")
+		p := PageSettings("Home", "home")
 		t.Execute(w, p)
 	})
 	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
-		t, _ := template.New("signin.tpl").ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/signin.tpl", "www/template/footer.tpl")
-		p := PageSettings("Login")
+		t, _ := template.New("signin.tpl").Funcs(
+				template.FuncMap { 
+                        		"eq": func(a, b string) bool { 
+                                		return a == b 
+                        		},
+			}).ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/signin.tpl", "www/template/footer.tpl")
+		p := PageSettings("Login", "login")
 		t.Execute(w, p)
 	})
 	http.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
-		t, _ := template.New("about.tpl").ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/about.tpl", "www/template/footer.tpl")
-		p := PageSettings("About")
+		t, _ := template.New("about.tpl").Funcs(
+				template.FuncMap { 
+                        		"eq": func(a, b string) bool { 
+                                		return a == b 
+                        		},
+			}).ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/about.tpl", "www/template/footer.tpl")
+		p := PageSettings("About", "about")
 		t.Execute(w, p)
 	})
 	http.HandleFunc("/stats", func(w http.ResponseWriter, r *http.Request) {
-		t, _ := template.New("stats.tpl").ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/stats.tpl", "www/template/footer.tpl")
-		p := PageSettings("Public Stats")
+		t, _ := template.New("stats.tpl").Funcs(
+				template.FuncMap { 
+                        		"eq": func(a, b string) bool { 
+                                		return a == b 
+                        		},
+			}).ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/stats.tpl", "www/template/footer.tpl")
+		p := PageSettings("Public Stats", "stats")
 		t.Execute(w, p)
 	})
 	fmt.Print("Done. Serving...\n")
@@ -115,10 +136,6 @@ func loadServer(port string) {
 	http.ListenAndServe(port, nil)
 }
 
-func PageSettings(title string) Page {
-	if title == "" {
-		return Page{Title: config["Title"].(string), Body: "works", ProjectName: config["ProjectName"].(string)}
-	}
-
-	return Page{Title: title + " - " + config["Title"].(string), Body: "works", ProjectName: config["ProjectName"].(string)}
+func PageSettings(title string, pagename string) Page {
+	return Page{Title: title + " - " + config["Title"].(string), Body: "works", ProjectName: config["ProjectName"].(string), PageName: pagename}
 }
