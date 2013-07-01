@@ -1,6 +1,6 @@
 {{define "menu"}}
       <div class="masthead">
-        <h3 class="muted">Schumix Webadmin</h3>
+        <h3 class="muted">{{.ProjectName}}</h3>
         <div class="navbar">
           <div class="navbar-inner">
             <div class="container">

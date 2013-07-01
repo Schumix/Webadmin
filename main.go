@@ -17,8 +17,9 @@ var db *sql.DB
 var config map[string]interface{}
 
 type Page struct {
-	Title string
-	Body  string
+	Title        string
+	Body         string
+	ProjectName  string
 }
 
 func main() {
@@ -91,22 +92,22 @@ func loadServer(port string) {
 		}*/
 
 		t, _ := template.New("index.tpl").ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/index.tpl", "www/template/footer.tpl")
-		p := Page{Title: config["Title"].(string), Body: "works"}
+		p := Page{Title: config["Title"].(string), Body: "works", ProjectName: config["ProjectName"].(string)}
 		t.Execute(w, p)
 	})
 	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
 		t, _ := template.New("signin.tpl").ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/signin.tpl", "www/template/footer.tpl")
-		p := Page{Title: "Login - " + config["Title"].(string), Body: "works"}
+		p := Page{Title: "Login - " + config["Title"].(string), Body: "works", ProjectName: config["ProjectName"].(string)}
 		t.Execute(w, p)
 	})
 	http.HandleFunc("/about", func(w http.ResponseWriter, r *http.Request) {
 		t, _ := template.New("about.tpl").ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/about.tpl", "www/template/footer.tpl")
-		p := Page{Title: "About - " + config["Title"].(string), Body: "works"}
+		p := Page{Title: "About - " + config["Title"].(string), Body: "works", ProjectName: config["ProjectName"].(string)}
 		t.Execute(w, p)
 	})
 	http.HandleFunc("/stats", func(w http.ResponseWriter, r *http.Request) {
 		t, _ := template.New("stats.tpl").ParseFiles("www/template/header.tpl", "www/template/menu.tpl", "www/stats.tpl", "www/template/footer.tpl")
-		p := Page{Title: "Public Stats - " + config["Title"].(string), Body: "works"}
+		p := Page{Title: "Public Stats - " + config["Title"].(string), Body: "works", ProjectName: config["ProjectName"].(string)}
 		t.Execute(w, p)
 	})
 	fmt.Print("Done. Serving...\n")
