@@ -1,9 +1,9 @@
-{{template "header"}}
-      {{template "menu"}}
+{{template "header" .}}
+      {{template "menu" .}}
 
       <!-- Jumbotron -->
       <div class="jumbotron">
-        <h1>Teszt!</h1>
+        <h1>Test!</h1>
         <p class="lead">Test,Test,Test,Test,Test,Test,Test,Test,Test,Test,Test,Test,Test,Test,Test,Test,Test,Test</p>
         <a class="btn btn-large btn-success" href="#">Get started today</a>
       </div>
@@ -28,4 +28,4 @@
           <p><a class="btn" href="#">View details &raquo;</a></p>
         </div>
       </div>
-{{template "footer"}}
+{{template "footer" .}}

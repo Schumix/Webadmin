@@ -2,7 +2,9 @@
       <hr>
 
       <div class="footer">
-        <p>&copy; 2013 Schumix Team</p>
+        <div align="center">
+          <p>&copy; 2013 Schumix Team</p>
+        </div>
       </div>
 
     </div> <!-- /container -->

@@ -1,5 +1,5 @@
-{{template "header"}}
-      {{template "menu"}}
+{{template "header" .}}
+      {{template "menu" .}}
 
       <!-- Jumbotron -->
       <div class="jumbotron">
@@ -28,4 +28,4 @@
           <p><a class="btn" href="#">View details &raquo;</a></p>
         </div>
       </div>
-{{template "footer"}}
+{{template "footer" .}}
