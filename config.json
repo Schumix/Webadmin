@@ -1,4 +1,5 @@
 {
 	"filelocation" : "Schumix.db3",
-	"port" : "45987"
+	"port" : "45987",
+	"webtitle" : "Schumix Webadmin"
 }
