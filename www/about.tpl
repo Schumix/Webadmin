@@ -18,8 +18,9 @@
         <div class="span4">
           <h2>Contributors</h2>
           <p>
+            - <a href="https://github.com/Jackneill">Jackneill</a><br>
             - <a href="https://github.com/yeahunter">Invisible</a><br>
-            - <a href="https://github.com/Jackneill">Jackneill</a>
+            - <a href="https://github.com/AgeNtv2">AgeNt</a>
           </p>
        </div>
         <div class="span4">
