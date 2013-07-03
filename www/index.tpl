@@ -5,7 +5,7 @@
       <div class="jumbotron">
         <h1>Schumix</h1>
         <p class="lead">Schumix Irc Bot and Framework</p>
-        <a class="btn btn-large btn-success" href="https://github.com/Schumix/Webadmin">Get started today</a>
+        <a class="btn btn-large btn-success" href="https://github.com/Schumix/Schumix2">Get started today</a>
       </div>
 
       <hr>
