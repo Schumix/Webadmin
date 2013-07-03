@@ -13,13 +13,13 @@
       <div class="row-fluid">
         <div class="span4">
           <h2>Main developer</h2>
-          <p>Megaxxx</p>
+          <p><a href="https://github.com/megax">Megax</a></p>
         </div>
         <div class="span4">
           <h2>Contributors</h2>
           <p>
-            - Invisible<br>
-            - Jackneill
+            - <a href="https://github.com/yeahunter">Invisible</a><br>
+            - <a href="https://github.com/Jackneill">Jackneill</a>
           </p>
        </div>
         <div class="span4">
