@@ -13,4 +13,5 @@
 	`go get github.com/mattn/go-sqlite3`
 
 After you can run it by:<br>
-`go run main.go`
+`go run main.go`<br>
+Access the site at `localhost:45987` with default port. You can change it in config.json.
