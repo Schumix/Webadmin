@@ -26,7 +26,7 @@
         <div class="span4">
           <h2>GitHub</h2>
           <p>Source Code/Issue Tracker</p>
-          <p><a class="btn" href="https://github.com/Schumix/Webadmin">View details &raquo;</a></p>
+          <p><a class="btn" href="https://github.com/Schumix/Schumix2">View details &raquo;</a></p>
         </div>
       </div>
 {{template "footer" .}}
