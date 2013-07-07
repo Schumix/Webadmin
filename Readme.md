@@ -1,4 +1,4 @@
-# Schumix WebAdmin
+# Schumix Webadmin
 
 ### Required packages/programs
 * `go` programming language<br>
