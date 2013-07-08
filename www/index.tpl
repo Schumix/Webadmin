@@ -1,6 +1,13 @@
 {{template "header" .}}
       {{template "menu" .}}
 
+	{{if .Success}}
+      <div class="alert alert-success">  
+        <a class="close" data-dismiss="alert">×</a>  
+        <strong>Error!</strong> {{.Body}}  
+      </div>  
+	{{end}}
+
       <!-- Jumbotron -->
       <div class="jumbotron">
         <h1>Schumix</h1>

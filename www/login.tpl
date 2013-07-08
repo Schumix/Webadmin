@@ -2,6 +2,12 @@
 	{{template "menu" .}}
 {{if .SessionValue}}
 {{else}}
+	{{if .Error}}
+      <div class="alert alert-error">  
+        <a class="close" data-dismiss="alert">×</a>  
+        <strong>Error!</strong> {{.Body}}  
+      </div>  
+	{{end}}
       <form action="/login" method="post" class="form-signin">
         <h2 class="form-signin-heading">Please sign in</h2>
         <input type="text" name="userid" class="input-block-level" placeholder="Account Name">

@@ -45,14 +45,17 @@ type Page struct {
 	PageName     string
 	SessionValue interface{}
 	IsLogin      bool
+	Error        bool
+	Success      bool
 }
 
 var logger = log.New(os.Stdout, "", log.Ldate|log.Ltime)
 var manager = session.NewSessionManager(logger)
 
 type User struct {
-	UserId   string
-	Password string
+	UserId      string
+	Password    string
+	SuccesLogin bool
 }
 
 func getSession(ctx *web.Context, manager *session.SessionManager) *session.Session {
@@ -125,6 +128,14 @@ func loadServer(port string) {
 	web.Config.StaticDir = config["WebDir"].(string)
 
 	web.Get("/", func(ctx *web.Context) {
+		session := getSession(ctx, manager)
+		if session.Value != nil && session.Value.(*User).SuccesLogin {
+			session.Value.(*User).SuccesLogin = false
+			p := Page{Title: "Home" + " - " + config["Title"].(string), Body: "Succes login!", ProjectName: config["ProjectName"].(string), PageName: "home", SessionValue: session.Value, Success: true}
+			HandleFunc(ctx, p, "index.tpl", "index.tpl")
+			return
+		}
+
 		HandleDefaultFunc(ctx, "index.tpl", "index.tpl", "Home", "home")
 	})
 	web.Get("/login", func(ctx *web.Context) {
@@ -153,13 +164,8 @@ func loadServer(port string) {
 			}
 			if !r.Next() {
 				// not found
-				logger.Printf("not found")
-				// Kiírás hogy miért nem volt sikeres
-				p := Page{Title: "Login" + " - " + config["Title"].(string), Body: "User not found!", ProjectName: config["ProjectName"].(string), PageName: "login", SessionValue: nil}
+				p := Page{Title: "Login" + " - " + config["Title"].(string), Body: "User not found!", ProjectName: config["ProjectName"].(string), PageName: "login", SessionValue: nil, Error: true}
 				HandleFunc(ctx, p, "login.tpl", "login.tpl")
-				//tmpl.Execute(ctx, map[string]interface{} {
-				//	"Value": nil, "Msg": "User not found",
-				//})
 				return
 			}
 			var userid, password string
@@ -170,15 +176,28 @@ func loadServer(port string) {
 			}
 
 			// store User object to sessino
-			session.Value = &User{userid, password}
+			session.Value = &User{userid, password, true}
 			logger.Printf("User \"%s\" login", session.Value.(*User).UserId)
-
-			// valami kiírás hogy sikeres volt.
 			ctx.Redirect(302, "/")
 		}
 
-		// Kiírás hogy miért nem volt sikeres
-		ctx.Redirect(302, "/login")
+		if userid == "" && password != "" {
+			p := Page{Title: "Login" + " - " + config["Title"].(string), Body: "Nincs megadva a felhasználónév!", ProjectName: config["ProjectName"].(string), PageName: "login", SessionValue: nil, Error: true}
+			HandleFunc(ctx, p, "login.tpl", "login.tpl")
+			return
+		}
+
+		if userid != "" && password == "" {
+			p := Page{Title: "Login" + " - " + config["Title"].(string), Body: "Nincs megadva a jelszó!", ProjectName: config["ProjectName"].(string), PageName: "login", SessionValue: nil, Error: true}
+			HandleFunc(ctx, p, "login.tpl", "login.tpl")
+			return
+		}
+
+		if userid == "" && password == "" {
+			p := Page{Title: "Login" + " - " + config["Title"].(string), Body: "Nincs megadva a felhasználónév és a jelszó!", ProjectName: config["ProjectName"].(string), PageName: "login", SessionValue: nil, Error: true}
+			HandleFunc(ctx, p, "login.tpl", "login.tpl")
+			return
+		}
 	})
 	web.Get("/logout", func(ctx *web.Context) {
 		session := getSession(ctx, manager)
