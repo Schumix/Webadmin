@@ -131,8 +131,7 @@ func loadServer(port string) {
 		session := getSession(ctx, manager)
 		if session.Value != nil && session.Value.(*User).SuccesLogin {
 			session.Value.(*User).SuccesLogin = false
-			p := Page{Title: "Home" + " - " + config["Title"].(string), Body: "Succes login!", ProjectName: config["ProjectName"].(string), PageName: "home", SessionValue: session.Value, Success: true}
-			HandleFunc(ctx, p, "index.tpl", "index.tpl")
+			HomeSuccess(ctx, "Success login!")
 			return
 		}
 
@@ -201,6 +200,8 @@ func loadServer(port string) {
 			// abandon
 			logger.Printf("User \"%s\" logout", session.Value.(*User).UserId)
 			session.Abandon()
+			HomeSuccess(ctx, "Success logout!")
+			return
 		}
 		ctx.Redirect(302, "/")
 	})
@@ -244,6 +245,12 @@ func PageSettings(ctx *web.Context, title string, pagename string) Page {
 func LoginError(ctx *web.Context, message string) {
 	p := Page{Title: "Login" + " - " + config["Title"].(string), Body: message, ProjectName: config["ProjectName"].(string), PageName: "login", SessionValue: nil, Error: true}
 	HandleFunc(ctx, p, "login.tpl", "login.tpl")
+}
+
+func HomeSuccess(ctx *web.Context, message string) {
+	session := getSession(ctx, manager)
+	p := Page{Title: "Home" + " - " + config["Title"].(string), Body: message, ProjectName: config["ProjectName"].(string), PageName: "home", SessionValue: session.Value, Success: true, IsLogin: IsLogin(ctx)}
+	HandleFunc(ctx, p, "index.tpl", "index.tpl")
 }
 
 func IsLogin(ctx *web.Context) bool {
