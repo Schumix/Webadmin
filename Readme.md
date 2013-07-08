@@ -1,5 +1,6 @@
 # Schumix Webadmin
 
+#### LICENCE: GNU LGPL 3
 ### Required packages/programs
 * `go` programming language<br>
 	You can install it by: <br>
