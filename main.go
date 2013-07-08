@@ -154,7 +154,7 @@ func loadServer(port string) {
 		}
 
 		userid := getParam(ctx, "userid")
-		password := getParam(ctx, "password")
+		password := sha1_gen(getParam(ctx, "password"))
 		if userid != "" && password != "" {
 			// find user
 			st, _ := db.Prepare("select Name, Password from admins where Name = ? and Password = ? and ServerName = 'rizon'")
