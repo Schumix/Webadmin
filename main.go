@@ -223,12 +223,15 @@ func HandleFunc(ctx *web.Context, page Page, filename string, filelocation strin
 }
 
 func PageSettings(ctx *web.Context, title string, pagename string) Page {
-	var islogin bool = false
+	return Page{Title: title + " - " + config["Title"].(string), Body: "works", ProjectName: config["ProjectName"].(string), PageName: pagename, SessionValue: getSession(ctx, manager).Value, IsLogin: IsLogin(ctx)}
+}
+
+func IsLogin(ctx *web.Context) bool {
 	session := getSession(ctx, manager)
 
 	if session.Value != nil {
-		islogin = true
+		return true
 	}
 
-	return Page{Title: title + " - " + config["Title"].(string), Body: "works", ProjectName: config["ProjectName"].(string), PageName: pagename, SessionValue: getSession(ctx, manager).Value, IsLogin: islogin}
+	return false
 }
