@@ -164,8 +164,7 @@ func loadServer(port string) {
 			}
 			if !r.Next() {
 				// not found
-				p := Page{Title: "Login" + " - " + config["Title"].(string), Body: "User not found!", ProjectName: config["ProjectName"].(string), PageName: "login", SessionValue: nil, Error: true}
-				HandleFunc(ctx, p, "login.tpl", "login.tpl")
+				LoginError(ctx, "User not found!")
 				return
 			}
 			var userid, password string
@@ -182,20 +181,17 @@ func loadServer(port string) {
 		}
 
 		if userid == "" && password != "" {
-			p := Page{Title: "Login" + " - " + config["Title"].(string), Body: "Nincs megadva a felhasználónév!", ProjectName: config["ProjectName"].(string), PageName: "login", SessionValue: nil, Error: true}
-			HandleFunc(ctx, p, "login.tpl", "login.tpl")
+			LoginError(ctx, "Nincs megadva a felhasználónév!")
 			return
 		}
 
 		if userid != "" && password == "" {
-			p := Page{Title: "Login" + " - " + config["Title"].(string), Body: "Nincs megadva a jelszó!", ProjectName: config["ProjectName"].(string), PageName: "login", SessionValue: nil, Error: true}
-			HandleFunc(ctx, p, "login.tpl", "login.tpl")
+			LoginError(ctx, "Nincs megadva a jelszó!")
 			return
 		}
 
 		if userid == "" && password == "" {
-			p := Page{Title: "Login" + " - " + config["Title"].(string), Body: "Nincs megadva a felhasználónév és a jelszó!", ProjectName: config["ProjectName"].(string), PageName: "login", SessionValue: nil, Error: true}
-			HandleFunc(ctx, p, "login.tpl", "login.tpl")
+			LoginError(ctx, "Nincs megadva a felhasználónév és a jelszó!")
 			return
 		}
 	})
@@ -243,6 +239,11 @@ func HandleFunc(ctx *web.Context, page Page, filename string, filelocation strin
 
 func PageSettings(ctx *web.Context, title string, pagename string) Page {
 	return Page{Title: title + " - " + config["Title"].(string), ProjectName: config["ProjectName"].(string), PageName: pagename, SessionValue: getSession(ctx, manager).Value, IsLogin: IsLogin(ctx)}
+}
+
+func LoginError(ctx *web.Context, message string) {
+	p := Page{Title: "Login" + " - " + config["Title"].(string), Body: message, ProjectName: config["ProjectName"].(string), PageName: "login", SessionValue: nil, Error: true}
+	HandleFunc(ctx, p, "login.tpl", "login.tpl")
 }
 
 func IsLogin(ctx *web.Context) bool {
