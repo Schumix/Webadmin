@@ -20,6 +20,8 @@ package main
 
 import (
 	//"container/list"
+	"encoding/hex"
+	"crypto/sha1"
 	"database/sql"
 	"encoding/json"
 	"fmt"
@@ -261,4 +263,11 @@ func IsLogin(ctx *web.Context) bool {
 	}
 
 	return false
+}
+
+func sha1_gen(data string) string {
+	chiperer := sha1.New()
+	chiperer.Write([]byte(data))
+	bs := chiperer.Sum(nil)
+	return hex.EncodeToString(bs)
 }
