@@ -119,7 +119,7 @@ func loadServer(port string) {
 	manager.OnEnd(func(session *session.Session) {
 		logger.Printf("End session(\"%s\")", session.Id)
 	})
-	manager.SetTimeout(60)
+	manager.SetTimeout(300)
 
 	web.Config.CookieSecret = "7C19QRmwf3mHZ9CPAaPQ0hsWeufKd"
 	web.Config.StaticDir = config["WebDir"].(string)
