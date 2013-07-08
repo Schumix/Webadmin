@@ -4,7 +4,7 @@
 	{{if .Success}}
       <div class="alert alert-success">  
         <a class="close" data-dismiss="alert">×</a>  
-        <strong>Error!</strong> {{.Body}}  
+        <strong>Succes!</strong> {{.Body}}  
       </div>  
 	{{end}}
 
