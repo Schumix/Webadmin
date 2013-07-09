@@ -10,8 +10,9 @@
 	`mkdir ~/.gopath`<br>
 	`export GOPATH=~/.gopath`<br>
 	You can change `~/.gopath` to whatever you want.<br>
-* `github.com/mattn/go-sqlite3` SQLite go binding<br>
-	`go get github.com/mattn/go-sqlite3`
+* SQLite go binding: 	`go get github.com/mattn/go-sqlite3`
+* Backend web services: `go get github.com/hoisie/web`
+* Session manager: 	`go get github.com/mattn/go-session-manager`
 
 After you can run it by:<br>
 `go run main.go`<br>
