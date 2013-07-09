@@ -15,4 +15,5 @@
 
 After you can run it by:<br>
 `go run main.go`<br>
-Access the site at `localhost:45987` with default port. You can change it in config.json.
+Access the site at `localhost:45987` with default port.<br>
+You can change the site's default settings in `config.json`.
