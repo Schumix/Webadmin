@@ -46,7 +46,7 @@ type Page struct {
 	ProjectName  string
 	PageName     string
 	SessionValue interface{}
-	IsLogin      bool
+	IsLoggedIn   bool
 	Error        bool
 	Success      bool
 }
@@ -133,7 +133,7 @@ func loadServer(port string) {
 		session := getSession(ctx, manager)
 		if session.Value != nil && session.Value.(*User).SuccesLogin {
 			session.Value.(*User).SuccesLogin = false
-			HomeSuccess(ctx, "Success login!")
+			HomeSuccess(ctx, "Successful login!")
 			return
 		}
 
@@ -182,17 +182,15 @@ func loadServer(port string) {
 		}
 
 		if userid == "" && password != "" {
-			LoginError(ctx, "Nincs megadva a felhasználónév!")
+			LoginError(ctx, "Username is missing!")
 			return
 		}
-
 		if userid != "" && password == "" {
-			LoginError(ctx, "Nincs megadva a jelszó!")
+			LoginError(ctx, "Password is missing!")
 			return
 		}
-
 		if userid == "" && password == "" {
-			LoginError(ctx, "Nincs megadva a felhasználónév és a jelszó!")
+			LoginError(ctx, "Username and password are missing!")
 			return
 		}
 	})
@@ -202,7 +200,7 @@ func loadServer(port string) {
 			// abandon
 			logger.Printf("User \"%s\" logout", session.Value.(*User).UserId)
 			session.Abandon()
-			HomeSuccess(ctx, "Success logout!")
+			HomeSuccess(ctx, "Successful logout!")
 			return
 		}
 		ctx.Redirect(302, "/")
@@ -241,7 +239,7 @@ func HandleFunc(ctx *web.Context, page Page, filename string, filelocation strin
 }
 
 func PageSettings(ctx *web.Context, title string, pagename string) Page {
-	return Page{Title: title + " - " + config["Title"].(string), ProjectName: config["ProjectName"].(string), PageName: pagename, SessionValue: getSession(ctx, manager).Value, IsLogin: IsLogin(ctx)}
+	return Page{Title: title + " - " + config["Title"].(string), ProjectName: config["ProjectName"].(string), PageName: pagename, SessionValue: getSession(ctx, manager).Value, IsLoggedIn: IsLoggedIn(ctx)}
 }
 
 func LoginError(ctx *web.Context, message string) {
@@ -251,17 +249,16 @@ func LoginError(ctx *web.Context, message string) {
 
 func HomeSuccess(ctx *web.Context, message string) {
 	session := getSession(ctx, manager)
-	p := Page{Title: "Home" + " - " + config["Title"].(string), Body: message, ProjectName: config["ProjectName"].(string), PageName: "home", SessionValue: session.Value, Success: true, IsLogin: IsLogin(ctx)}
+	p := Page{Title: "Home" + " - " + config["Title"].(string), Body: message, ProjectName: config["ProjectName"].(string), PageName: "home", SessionValue: session.Value, Success: true, IsLoggedIn: IsLoggedIn(ctx)}
 	HandleFunc(ctx, p, "index.tpl", "index.tpl")
 }
 
-func IsLogin(ctx *web.Context) bool {
+func IsLoggedIn(ctx *web.Context) bool {
 	session := getSession(ctx, manager)
 
 	if session.Value != nil {
 		return true
 	}
-
 	return false
 }
 
