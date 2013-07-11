@@ -27,7 +27,7 @@ const MAX_BUFFER_SIZE = 262144
 
 func connectToSocket() {
 	origin := "http://localhost/"
-	url := "ws://localhost:12345/ws"
+	url := "ws://localhost:36200/ws"
 
 	ws, err := websocket.Dial(url, "", origin)
 	if err != nil {
