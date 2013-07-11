@@ -18,10 +18,29 @@
 
 package main
 
-func main() {
-	loadConfig()
-	db = connectToSql()
-	defer db.Close()
-	loadServer(":" + config["Port"].(string))
-	connectToSocket()
+import (
+	"code.google.com/p/go.net/websocket"
+	"fmt"
+)
+
+const MAX_BUFFER_SIZE = 262144
+
+func connectToSocket() {
+	origin := "http://localhost/"
+	url := "ws://localhost:12345/ws"
+
+	ws, err := websocket.Dial(url, "", origin)
+	if err != nil {
+		fmt.Println(err)
+	}
+	if _, err := ws.Write([]byte("hello, world!\n")); err != nil {
+		fmt.Println(err)
+	}
+
+	var msg = make([]byte, MAX_BUFFER_SIZE)
+	if n, err := ws.Read(msg); err != nil {
+		fmt.Println(err)
+	}
+
+	fmt.Printf("Received: %s.\n", msg[:n])
 }
