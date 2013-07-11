@@ -24,6 +24,6 @@ The configuration file (`config.json`) can be found at the root folder.
 ### Running
 
 You can run it by:<br>
-`go run main.go`<br>
+`go run main.go config.go crypto.go session.go sql.go webserver.go`<br>
 Access the site at `localhost:45987` with default port.<br>
 You can change the site's default settings in `config.json`.
