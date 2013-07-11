@@ -20,7 +20,6 @@ package main
 
 import (
 	//"container/list"
-	"database/sql"
 	"encoding/json"
 	"fmt"
 	"github.com/hoisie/web"
@@ -34,7 +33,6 @@ import (
 	"strings"
 )
 
-var db *sql.DB
 var config map[string]interface{}
 
 type Page struct {
@@ -75,7 +73,7 @@ func getParam(ctx *web.Context, name string) string {
 
 func main() {
 	loadConfig()
-	db = connectToSql(db)
+	db = connectToSql()
 	defer db.Close()
 	loadServer(":" + config["Port"].(string))
 }

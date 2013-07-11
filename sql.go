@@ -24,7 +24,9 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func connectToSql(db *sql.DB) *sql.DB {
+var db *sql.DB
+
+func connectToSql() *sql.DB {
 	var err error
 	db, err = sql.Open("sqlite3", config["SQLiteFile"].(string))
 	if err != nil {
