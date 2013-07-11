@@ -1,6 +1,6 @@
 /*
  * This file is part of Schumix Webadmin.
- * 
+ *
  * Copyright (C) 2013 Schumix Team <http://schumix.eu/>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,19 +20,16 @@ package main
 
 import (
 	//"container/list"
-	"encoding/hex"
-	"crypto/sha1"
 	"database/sql"
 	"encoding/json"
 	"fmt"
 	"github.com/hoisie/web"
 	"github.com/mattn/go-session-manager"
-	_ "github.com/mattn/go-sqlite3"
 	"html/template"
 	"io"
 	//"net/http"
-	"os"
 	"log"
+	"os"
 	//"path"
 	"strings"
 )
@@ -78,19 +75,9 @@ func getParam(ctx *web.Context, name string) string {
 
 func main() {
 	loadConfig()
-	db = connectToSql()
+	db = connectToSql(db)
 	defer db.Close()
 	loadServer(":" + config["Port"].(string))
-}
-
-func connectToSql() *sql.DB {
-	var err error
-	db, err = sql.Open("sqlite3", config["SQLiteFile"].(string))
-	if err != nil {
-		fmt.Println(err)
-		return nil
-	}
-	return db
 }
 
 func loadConfig() {
@@ -225,7 +212,7 @@ func HandleDefaultFunc(ctx *web.Context, filename string, filelocation string, t
 			},
 		}).ParseFiles(config["WebDir"].(string)+"/template/header.tpl", config["WebDir"].(string)+"/template/menu.tpl", config["WebDir"].(string)+"/"+filelocation, config["WebDir"].(string)+"/template/footer.tpl")
 	p := PageSettings(ctx, title, pagename)
-	t.Execute(ctx, p);
+	t.Execute(ctx, p)
 }
 
 func HandleFunc(ctx *web.Context, page Page, filename string, filelocation string) {
@@ -261,11 +248,4 @@ func IsLoggedIn(ctx *web.Context) bool {
 		return true
 	}
 	return false
-}
-
-func sha1_gen(data string) string {
-	chiperer := sha1.New()
-	chiperer.Write([]byte(data))
-	bs := chiperer.Sum(nil)
-	return hex.EncodeToString(bs)
 }
