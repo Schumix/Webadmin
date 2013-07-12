@@ -22,6 +22,7 @@ import (
 	"bufio"
 	"fmt"
 	"net"
+	"strconv"
 )
 
 //const MAX_BUFFER_SIZE = 262144
@@ -59,6 +60,6 @@ func connectToSocket(host string) {
 }
 
 func regConnection() {
-	msg := string(CMSG_REQUEST_AUTH) + PACKET_SEPARATOR + "schumix webadmin (reg GUID)" + PACKET_SEPARATOR + md5_gen("schumix") + PACKET_SEPARATOR
+	msg := strconv.Itoa(CMSG_REQUEST_AUTH) + PACKET_SEPARATOR + "schumix webadmin (reg GUID)" + PACKET_SEPARATOR + md5_gen("schumix") + PACKET_SEPARATOR
 	fmt.Fprint(conn, msg)
 }
