@@ -49,7 +49,7 @@ func connectToSocket(host string) {
 	fmt.Print("[SOCKET] Done. ")
 
 	regConnection()
-	go listenToSocket()
+	listenToSocket()
 }
 
 func listenToSocket() {
