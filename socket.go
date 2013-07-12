@@ -28,7 +28,7 @@ import (
 const PACKET_SEPARATOR = "|;|"
 
 const (
-	SCMSG_PACKET_NULL int = iota
+	SCMSG_PACKET_NULL = iota
 	CMSG_REQUEST_AUTH
 	SMSG_AUTH_APPROVED
 	SMSG_AUTH_DENIED
@@ -59,6 +59,6 @@ func connectToSocket(host string) {
 }
 
 func regConnection() {
-	msg := string(CMSG_REQUEST_AUTH) + PACKET_SEPARATOR + "schumix webadmin (reg GUID)" + PACKET_SEPARATOR + md5_gen("schumix")
+	msg := string(CMSG_REQUEST_AUTH) + PACKET_SEPARATOR + "schumix webadmin (reg GUID)" + PACKET_SEPARATOR + md5_gen("schumix") + PACKET_SEPARATOR
 	fmt.Fprint(conn, msg)
 }
