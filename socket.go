@@ -25,7 +25,7 @@ import (
 	"strconv"
 )
 
-//const MAX_BUFFER_SIZE = 262144
+const MAX_BUFFER_SIZE = 262144
 const PACKET_SEPARATOR = "|;|"
 
 const (
@@ -40,23 +40,25 @@ const (
 var conn net.Conn
 
 func connectToSocket(host string) {
-	fmt.Print("[SOCKET] Connecting to", host, "...\n")
+	fmt.Print("[SOCKET] Connecting to ", host, "...\n")
 	var err error
 	conn, err = net.Dial("tcp", host)
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Print("[SOCKET] Done. Listening...\n")
+	fmt.Print("[SOCKET] Done. ")
 
 	regConnection()
+	go listenToSocket()
+}
 
-	status, err := bufio.NewReader(conn).ReadString('\n')
-	if err != nil {
-		fmt.Println(err)
-		fmt.Println("----------")
+func listenToSocket() {
+	fmt.Printf("Listening...")
+	status := bufio.NewReaderSize(conn, MAX_BUFFER_SIZE)
+	for {
+		status.ReadString('\n')
 		fmt.Println(status)
 	}
-	fmt.Println(status)
 }
 
 func regConnection() {
