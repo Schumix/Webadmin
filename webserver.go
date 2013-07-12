@@ -29,7 +29,7 @@ import (
 var logger = log.New(os.Stdout, "", log.Ldate|log.Ltime)
 
 func loadServer(port string) {
-	fmt.Print("Starting web server on localhost", port, "...\n")
+	fmt.Print("[WEB SERVER] Starting web server on localhost", port, "...\n")
 
 	manager.OnStart(func(session *session.Session) {
 		logger.Printf("Start session(\"%s\")", session.Id)
@@ -126,6 +126,6 @@ func loadServer(port string) {
 		HandleDefaultFunc(ctx, "stats.tpl", "stats.tpl", "Public Stats", "stats")
 	})
 
-	fmt.Print("Done. Serving...\n")
+	fmt.Print("[WEB SERVER] Done. Serving...\n")
 	web.Run(port)
 }

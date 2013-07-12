@@ -19,28 +19,26 @@
 package main
 
 import (
-	"code.google.com/p/go.net/websocket"
+	"bufio"
 	"fmt"
+	"net"
 )
 
-const MAX_BUFFER_SIZE = 262144
+//const MAX_BUFFER_SIZE = 262144
 
-func connectToSocket() {
-	origin := "http://localhost/"
-	url := "ws://localhost:36200/ws"
-
-	ws, err := websocket.Dial(url, "", origin)
+func connectToSocket(host string) {
+	fmt.Print("[SOCKET] Connecting to", host, "...\n")
+	conn, err := net.Dial("tcp", host)
 	if err != nil {
 		fmt.Println(err)
 	}
-	if _, err := ws.Write([]byte("hello, world!\n")); err != nil {
+	fmt.Print("[SOCKET] Done. Listening...\n")
+	//fmt.Fprintf(conn, "GET / HTTP/1.0\r\n\r\n")
+	status, err := bufio.NewReader(conn).ReadString('\n')
+	if err != nil {
 		fmt.Println(err)
+		fmt.Println("----------")
+		fmt.Println(status)
 	}
-
-	var msg = make([]byte, MAX_BUFFER_SIZE)
-	if n, err := ws.Read(msg); err != nil {
-		fmt.Println(err)
-	}
-
-	fmt.Printf("Received: %s.\n", msg[:n])
+	fmt.Println(status)
 }
