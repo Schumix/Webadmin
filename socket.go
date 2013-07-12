@@ -25,15 +25,30 @@ import (
 )
 
 //const MAX_BUFFER_SIZE = 262144
+const PACKET_SEPARATOR = "|;|"
+
+const (
+	SCMSG_PACKET_NULL int = iota
+	CMSG_REQUEST_AUTH
+	SMSG_AUTH_APPROVED
+	SMSG_AUTH_DENIED
+	CMSG_CLOSE_CONNECTION
+	SMSG_CLOSE_CONNECTION
+)
+
+var conn net.Conn
 
 func connectToSocket(host string) {
 	fmt.Print("[SOCKET] Connecting to", host, "...\n")
-	conn, err := net.Dial("tcp", host)
+	var err error
+	conn, err = net.Dial("tcp", host)
 	if err != nil {
 		fmt.Println(err)
 	}
 	fmt.Print("[SOCKET] Done. Listening...\n")
-	//fmt.Fprintf(conn, "GET / HTTP/1.0\r\n\r\n")
+
+	regConnection()
+
 	status, err := bufio.NewReader(conn).ReadString('\n')
 	if err != nil {
 		fmt.Println(err)
@@ -41,4 +56,9 @@ func connectToSocket(host string) {
 		fmt.Println(status)
 	}
 	fmt.Println(status)
+}
+
+func regConnection() {
+	msg := string(CMSG_REQUEST_AUTH) + PACKET_SEPARATOR + "schumix webadmin (reg GUID)" + PACKET_SEPARATOR + md5_gen("schumix")
+	fmt.Fprint(conn, msg)
 }
