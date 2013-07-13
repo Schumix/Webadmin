@@ -51,11 +51,12 @@ func connectToSocket(host string) {
 	conn, err = net.Dial("tcp", host)
 	if err != nil {
 		fmt.Println(err)
+		fmt.Println("[SOCKET] Fail.")
+	} else {
+		fmt.Print("[SOCKET] Done. ")
+		go regConnection()
+		listenToSocket()
 	}
-	fmt.Print("[SOCKET] Done. ")
-
-	go regConnection()
-	listenToSocket()
 }
 
 func listenToSocket() {
@@ -79,13 +80,23 @@ func handlePacket(data string, size int) {
 	opcode, _ := strconv.Atoi(packet[0])
 	switch opcode {
 	case SCMSG_PACKET_NULL:
+	case CMSG_REQUEST_AUTH:
 	case SMSG_AUTH_APPROVED:
 		fmt.Print("Auth request approved.")
 	case SMSG_AUTH_DENIED:
 		fmt.Print("Auth request denied.")
+	case CMSG_CLOSE_CONNECTION:
 	case SMSG_CLOSE_CONNECTION:
 		fmt.Print("Server sent closing signal. Connection closed.")
 		conn.Close()
+	case CMSG_PING:
+	case SMSG_PING:
+		sendPong()
+	case CMSG_PONG:
+	case SMSG_PONG:
+		sendPing()
+	case CMSG_SCHUMIX_VERSION:
+	case SMSG_SCHUMIX_VERSION:
 	default:
 		fmt.Print("Unknown opcode.")
 	}
@@ -98,6 +109,16 @@ func shutdownSocket() {
 	fmt.Println("Shutting down socket connection...")
 	sendCloseSignal()
 	conn.Close()
+}
+
+func sendPing() {
+	msg := strconv.Itoa(CMSG_PING) + PACKET_SEPARATOR
+	fmt.Fprint(conn, msg)
+}
+
+func sendPong() {
+	msg := strconv.Itoa(CMSG_PONG) + PACKET_SEPARATOR
+	fmt.Fprint(conn, msg)
 }
 
 func sendCloseSignal() {
