@@ -19,7 +19,7 @@
 package main
 
 import (
-	"bufio"
+	//"bufio"
 	"fmt"
 	"net"
 	"strconv"
@@ -48,16 +48,21 @@ func connectToSocket(host string) {
 	}
 	fmt.Print("[SOCKET] Done. ")
 
-	regConnection()
+	go regConnection()
 	listenToSocket()
 }
 
 func listenToSocket() {
-	fmt.Printf("Listening...")
-	status := bufio.NewReaderSize(conn, MAX_BUFFER_SIZE)
+	fmt.Printf("Listening...\n")
+	buffer := make([]byte, MAX_BUFFER_SIZE)
 	for {
-		status.ReadString('\n')
-		fmt.Println(status)
+		n, err := conn.Read(buffer[:])
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println("-- START PACKET --", n, "bytes", "--")
+		fmt.Println(string(buffer[:n]))
+		fmt.Println("-- END PACKET --")
 	}
 }
 
