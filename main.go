@@ -18,10 +18,26 @@
 
 package main
 
+import (
+	"fmt"
+	"os"
+	"os/signal"
+)
+
 func main() {
+	go beforeShutdown()
 	loadConfig()
 	db = connectToSql()
 	defer db.Close()
 	go connectToSocket("localhost:36200")
 	loadServer(":" + config["Port"].(string))
+}
+
+func beforeShutdown() {
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt, os.Kill)
+	s := <-c
+	fmt.Println("Got signal:", s)
+	shutdownSocket()
+	os.Exit(1)
 }

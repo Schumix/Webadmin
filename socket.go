@@ -60,7 +60,7 @@ func listenToSocket() {
 		if err != nil {
 			fmt.Println(err)
 		}
-		go handlePacket(string(buffer[:n]), n)
+		handlePacket(string(buffer[:n]), n)
 	}
 }
 
@@ -78,14 +78,25 @@ func handlePacket(data string, size int) {
 	case SMSG_AUTH_DENIED:
 		fmt.Print("Auth request denied.")
 	case SMSG_CLOSE_CONNECTION:
-		fmt.Print("Server closed the connection.")
+		fmt.Print("Server sent closing signal. Connection closed.")
 		conn.Close()
 	default:
 		fmt.Print("Unknown opcode.")
 	}
 	fmt.Println(" --")
-	fmt.Println(packet[1])
+	fmt.Println(packet[1:])
 	fmt.Println("-- END PACKET --")
+}
+
+func shutdownSocket() {
+	fmt.Println("Shutting down socket connection...")
+	sendCloseSignal()
+	conn.Close()
+}
+
+func sendCloseSignal() {
+	msg := strconv.Itoa(CMSG_CLOSE_CONNECTION) + PACKET_SEPARATOR + "uh. stomachache. shutting down for now." + PACKET_SEPARATOR
+	fmt.Fprint(conn, msg)
 }
 
 func regConnection() {
