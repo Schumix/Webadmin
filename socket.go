@@ -44,15 +44,18 @@ const (
 )
 
 var conn net.Conn
+var isconnected bool
 
 func connectToSocket(host string) {
 	fmt.Print("[SOCKET] Connecting to ", host, "...\n")
 	var err error
 	conn, err = net.Dial("tcp", host)
 	if err != nil {
+		isconnected = false
 		fmt.Println(err)
 		fmt.Println("[SOCKET] Fail.")
 	} else {
+		isconnected = true
 		fmt.Print("[SOCKET] Done. ")
 		go regConnection()
 		listenToSocket()
@@ -100,9 +103,11 @@ func handlePacket(data string, size int) {
 }
 
 func shutdownSocket() {
-	fmt.Println("Shutting down socket connection...")
-	sendCloseSignal()
-	conn.Close()
+	if isconnected {
+		fmt.Println("Shutting down socket connection...")
+		sendCloseSignal()
+		conn.Close()
+	}
 }
 
 func sendPing() {
