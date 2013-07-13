@@ -22,6 +22,7 @@ import (
 	"fmt"
 	"net"
 	"strconv"
+	"strings"
 )
 
 const MAX_BUFFER_SIZE = 262144 // 8^6
@@ -59,10 +60,32 @@ func listenToSocket() {
 		if err != nil {
 			fmt.Println(err)
 		}
-		fmt.Println("-- START PACKET --", n, "bytes", "--")
-		fmt.Println(string(buffer[:n]))
-		fmt.Println("-- END PACKET --")
+		go handlePacket(string(buffer[:n]), n)
 	}
+}
+
+func handlePacket(data string, size int) {
+	// separate packet to its elements
+	packet := strings.Split(data, PACKET_SEPARATOR)
+
+	fmt.Println("-- START PACKET --", size, "bytes", "--")
+	fmt.Print("-- Opcode: ", packet[0], " -- ")
+	opcode, _ := strconv.Atoi(packet[0])
+	switch opcode {
+	case SCMSG_PACKET_NULL:
+	case CMSG_REQUEST_AUTH:
+	case SMSG_AUTH_APPROVED:
+		fmt.Print("Auth request approved.")
+	case SMSG_AUTH_DENIED:
+		fmt.Print("Auth request denied.")
+	case CMSG_CLOSE_CONNECTION:
+	case SMSG_CLOSE_CONNECTION:
+	default:
+		fmt.Print("Unknown opcode.")
+	}
+	fmt.Println(" --")
+	fmt.Println(packet[1])
+	fmt.Println("-- END PACKET --")
 }
 
 func regConnection() {
