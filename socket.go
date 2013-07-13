@@ -73,13 +73,13 @@ func handlePacket(data string, size int) {
 	opcode, _ := strconv.Atoi(packet[0])
 	switch opcode {
 	case SCMSG_PACKET_NULL:
-	case CMSG_REQUEST_AUTH:
 	case SMSG_AUTH_APPROVED:
 		fmt.Print("Auth request approved.")
 	case SMSG_AUTH_DENIED:
 		fmt.Print("Auth request denied.")
-	case CMSG_CLOSE_CONNECTION:
 	case SMSG_CLOSE_CONNECTION:
+		fmt.Print("Server closed the connection.")
+		conn.Close()
 	default:
 		fmt.Print("Unknown opcode.")
 	}
