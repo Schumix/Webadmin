@@ -2,6 +2,7 @@
 	"ProjectName" : "Schumix Webadmin",
 	"Title" : "Schumix Webadmin",
 	"SQLiteFile" : "Schumix.db3",
-	"Port" : "45987",
-	"WebDir" : "www"
+	"Port" : "45980",
+	"WebDir" : "www",
+	"TimeoutInMin" : "30"
 }

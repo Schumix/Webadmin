@@ -35,6 +35,12 @@ const (
 	SMSG_AUTH_DENIED
 	CMSG_CLOSE_CONNECTION
 	SMSG_CLOSE_CONNECTION
+	CMSG_PING
+	SMSG_PING
+	CMSG_PONG
+	SMSG_PONG
+	CMSG_SCHUMIX_VERSION
+	SMSG_SCHUMIX_VERSION
 )
 
 var conn net.Conn
@@ -101,5 +107,10 @@ func sendCloseSignal() {
 
 func regConnection() {
 	msg := strconv.Itoa(CMSG_REQUEST_AUTH) + PACKET_SEPARATOR + "schumix webadmin (reg GUID)" + PACKET_SEPARATOR + md5_gen("schumix") + PACKET_SEPARATOR
+	fmt.Fprint(conn, msg)
+}
+
+func requestVersion() {
+	msg := strconv.Itoa(CMSG_SCHUMIX_VERSION) + PACKET_SEPARATOR
 	fmt.Fprint(conn, msg)
 }
