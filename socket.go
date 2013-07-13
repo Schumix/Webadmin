@@ -79,7 +79,6 @@ func handlePacket(data string, size int) {
 	fmt.Print("-- Opcode: ", packet[0], " -- ")
 	opcode, _ := strconv.Atoi(packet[0])
 	switch opcode {
-	case SCMSG_PACKET_NULL:
 	case SMSG_AUTH_APPROVED:
 		fmt.Print("Auth request approved.")
 	case SMSG_AUTH_DENIED:
@@ -91,7 +90,6 @@ func handlePacket(data string, size int) {
 		sendPong()
 	case SMSG_PONG:
 		sendPong()
-	case CMSG_SCHUMIX_VERSION:
 	case SMSG_SCHUMIX_VERSION:
 	default:
 		fmt.Print("Unknown opcode.")
