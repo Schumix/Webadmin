@@ -24,7 +24,7 @@ import (
 	"strconv"
 )
 
-const MAX_BUFFER_SIZE = 262144
+const MAX_BUFFER_SIZE = 262144 // 8^6
 const PACKET_SEPARATOR = "|;|"
 
 const (
