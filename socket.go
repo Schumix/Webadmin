@@ -92,7 +92,7 @@ func handlePacket(data string, size int) {
 	case SMSG_PING:
 		sendPong()
 	case SMSG_PONG:
-		sendPong()
+		//sendPong()
 	case SMSG_SCHUMIX_VERSION:
 	default:
 		fmt.Print("Unknown opcode.")
