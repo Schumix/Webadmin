@@ -19,8 +19,8 @@
 package main
 
 import (
-	"io"
 	"fmt"
+	"io"
 	"net"
 	"strconv"
 	"strings"
@@ -45,18 +45,18 @@ const (
 )
 
 var conn net.Conn
-var isconnected bool
+var isConnected bool
 
 func connectToSocket(host string) {
 	fmt.Print("[SOCKET] Connecting to ", host, "...\n")
 	var err error
 	conn, err = net.Dial("tcp", host)
 	if err != nil {
-		isconnected = false
+		isConnected = false
 		fmt.Println(err)
 		fmt.Println("[SOCKET] Fail.")
 	} else {
-		isconnected = true
+		isConnected = true
 		fmt.Print("[SOCKET] Done. ")
 		go regConnection()
 		listenToSocket()
@@ -67,7 +67,7 @@ func listenToSocket() {
 	fmt.Printf("Listening...\n")
 	buffer := make([]byte, MAX_BUFFER_SIZE)
 	for {
-		if !isconnected || shutdown {
+		if !isConnected || shutdown {
 			break
 		}
 
@@ -89,7 +89,7 @@ func handlePacket(data string, size int) {
 	packet := strings.Split(data, PACKET_SEPARATOR)
 
 	if packet[0] == "" {
-		fmt.Print("Null packet.")
+		fmt.Print("Empty packet.")
 		return
 	}
 
@@ -100,10 +100,10 @@ func handlePacket(data string, size int) {
 	case SMSG_AUTH_APPROVED:
 		fmt.Print("Auth request approved.")
 	case SMSG_AUTH_DENIED:
-		isconnected = false
+		isConnected = false
 		fmt.Print("Auth request denied.")
 	case SMSG_CLOSE_CONNECTION:
-		isconnected = false
+		isConnected = false
 		fmt.Print("Server sent closing signal. Connection closed.")
 		conn.Close()
 	case SMSG_PING:
@@ -122,7 +122,7 @@ func handlePacket(data string, size int) {
 }
 
 func shutdownSocket() {
-	if isconnected {
+	if isConnected {
 		fmt.Println("Shutting down socket connection...")
 		sendCloseSignal()
 		conn.Close()
