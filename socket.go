@@ -66,6 +66,10 @@ func listenToSocket() {
 	fmt.Printf("Listening...\n")
 	buffer := make([]byte, MAX_BUFFER_SIZE)
 	for {
+		if !isconnected {
+			break
+		}
+
 		n, err := conn.Read(buffer[:])
 		if err != nil {
 			fmt.Println(err)
@@ -85,15 +89,19 @@ func handlePacket(data string, size int) {
 	case SMSG_AUTH_APPROVED:
 		fmt.Print("Auth request approved.")
 	case SMSG_AUTH_DENIED:
+		isconnected = false
 		fmt.Print("Auth request denied.")
 	case SMSG_CLOSE_CONNECTION:
+		isconnected = false
 		fmt.Print("Server sent closing signal. Connection closed.")
 		conn.Close()
 	case SMSG_PING:
 		sendPong()
 	case SMSG_PONG:
 		//sendPong()
+		break
 	case SMSG_SCHUMIX_VERSION:
+		break
 	default:
 		fmt.Print("Unknown opcode.")
 	}
