@@ -19,6 +19,7 @@
 package main
 
 import (
+	"io"
 	"fmt"
 	"net"
 	"strconv"
@@ -66,7 +67,7 @@ func listenToSocket() {
 	fmt.Printf("Listening...\n")
 	buffer := make([]byte, MAX_BUFFER_SIZE)
 	for {
-		if !isconnected {
+		if !isconnected || shutdown {
 			break
 		}
 
@@ -74,6 +75,11 @@ func listenToSocket() {
 		if err != nil {
 			fmt.Println(err)
 		}
+
+		if err == io.EOF {
+			break
+		}
+
 		handlePacket(string(buffer[:n]), n)
 	}
 }

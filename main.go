@@ -24,7 +24,10 @@ import (
 	"os/signal"
 )
 
+var shutdown bool
+
 func main() {
+	shutdown = false
 	go beforeShutdown()
 	loadConfig()
 	db = connectToSql()
@@ -38,7 +41,7 @@ func beforeShutdown() {
 	signal.Notify(c, os.Interrupt, os.Kill)
 	s := <-c
 	fmt.Println("Got signal:", s)
-	isconnected = false
+	shutdown = true
 	shutdownSocket()
 	os.Exit(1)
 }
