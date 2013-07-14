@@ -38,6 +38,7 @@ func beforeShutdown() {
 	signal.Notify(c, os.Interrupt, os.Kill)
 	s := <-c
 	fmt.Println("Got signal:", s)
+	isconnected = false
 	shutdownSocket()
 	os.Exit(1)
 }

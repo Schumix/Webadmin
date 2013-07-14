@@ -82,6 +82,11 @@ func handlePacket(data string, size int) {
 	// separate packet to its elements
 	packet := strings.Split(data, PACKET_SEPARATOR)
 
+	if packet[0] == "" {
+		fmt.Print("Null packet.")
+		return
+	}
+
 	fmt.Println("-- START PACKET --", size, "bytes", "--")
 	fmt.Print("-- Opcode: ", packet[0], " -- ")
 	opcode, _ := strconv.Atoi(packet[0])
