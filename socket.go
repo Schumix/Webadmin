@@ -60,7 +60,6 @@ func connectToSocket(host string) {
 		isConnected = true
 		fmt.Print("[SOCKET] Done. ")
 		go regConnection()
-		go requestVersion()
 		listenToSocket()
 	}
 }
@@ -96,6 +95,7 @@ func handlePacket(data string, size int) {
 	switch opcode {
 	case SMSG_AUTH_APPROVED:
 		fmt.Println("Auth request approved.")
+		requestVersion()
 	case SMSG_AUTH_DENIED:
 		isConnected = false
 		fmt.Println("Auth request denied.")
