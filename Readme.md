@@ -16,6 +16,7 @@
 * SQLite go binding:    `go get github.com/mattn/go-sqlite3`
 * Backend web services: `go get github.com/hoisie/web`
 * Session manager:      `go get github.com/mattn/go-session-manager`
+* Go version comparer:	`go get github.com/Jackneill/gosemver`
 
 ### Configuration
 
