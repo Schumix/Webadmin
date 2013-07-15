@@ -24,6 +24,9 @@ import (
 	"os/signal"
 )
 
+const VERSION = "0.2.2"
+const MIN_SCHUMIX_VERSION = "4.1.6"
+
 var shutdown bool
 
 func main() {

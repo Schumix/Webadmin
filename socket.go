@@ -20,6 +20,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/Jackneill/gosemver"
 	"io"
 	"net"
 	"strconv"
@@ -59,6 +60,7 @@ func connectToSocket(host string) {
 		isConnected = true
 		fmt.Print("[SOCKET] Done. ")
 		go regConnection()
+		go requestVersion()
 		listenToSocket()
 	}
 }
@@ -70,16 +72,13 @@ func listenToSocket() {
 		if !isConnected || shutdown {
 			break
 		}
-
 		n, err := conn.Read(buffer[:])
 		if err != nil {
 			fmt.Println(err)
 		}
-
 		if err == io.EOF {
 			break
 		}
-
 		handlePacket(string(buffer[:n]), n)
 	}
 }
@@ -87,36 +86,33 @@ func listenToSocket() {
 func handlePacket(data string, size int) {
 	// separate packet to its elements
 	packet := strings.Split(data, PACKET_SEPARATOR)
-
 	if packet[0] == "" {
 		fmt.Print("Empty packet.")
 		return
 	}
-
-	fmt.Println("-- START PACKET --", size, "bytes", "--")
-	fmt.Print("-- Opcode: ", packet[0], " -- ")
+	fmt.Print("-- START PACKET -- ", size, " bytes")
+	fmt.Print(" -- Opcode: ", packet[0], " -- ")
 	opcode, _ := strconv.Atoi(packet[0])
 	switch opcode {
 	case SMSG_AUTH_APPROVED:
-		fmt.Print("Auth request approved.")
+		fmt.Println("Auth request approved.")
 	case SMSG_AUTH_DENIED:
 		isConnected = false
-		fmt.Print("Auth request denied.")
+		fmt.Println("Auth request denied.")
 	case SMSG_CLOSE_CONNECTION:
 		isConnected = false
-		fmt.Print("Server sent closing signal. Connection closed.")
+		fmt.Println("Server sent closing signal. Connection closed.")
 		conn.Close()
 	case SMSG_PING:
+		fmt.Println("SMSG_PING")
 		sendPong()
 	case SMSG_PONG:
-		//sendPong()
-		break
+		fmt.Println("SMSG_PONG")
 	case SMSG_SCHUMIX_VERSION:
-		break
+		checkVersion(packet[1])
 	default:
-		fmt.Print("Unknown opcode.")
+		fmt.Println("Unknown opcode.")
 	}
-	fmt.Println(" --")
 	fmt.Println(packet[1:])
 	fmt.Println("-- END PACKET --")
 }
@@ -152,4 +148,16 @@ func regConnection() {
 func requestVersion() {
 	msg := strconv.Itoa(CMSG_SCHUMIX_VERSION) + PACKET_SEPARATOR
 	fmt.Fprint(conn, msg)
+}
+
+func checkVersion(ver string) {
+	res := gosemver.Compare(MIN_SCHUMIX_VERSION, ver)
+	if res == 0 || res == 1 {
+		fmt.Println("[VERSION] Version check OK.")
+		fmt.Println("[VERSION] Webadmin:", VERSION, "Min Schumix:",
+			MIN_SCHUMIX_VERSION, "Schumix connected:", ver)
+	} else {
+		fmt.Println("[VERSION] Schumix version is too low...")
+		shutdownSocket()
+	}
 }
