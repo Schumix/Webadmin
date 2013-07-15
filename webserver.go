@@ -125,7 +125,9 @@ func loadServer(port string) {
 	web.Get("/stats", func(ctx *web.Context) {
 		HandleDefaultFunc(ctx, "stats.tpl", "stats.tpl", "Public Stats", "stats")
 	})
-
+	web.Get("/status", func(ctx *web.Context) {
+		HandleDefaultFunc(ctx, "status.tpl", "status.tpl", "Status", "status")
+	})
 	fmt.Print("[WEB SERVER] Done. Serving...\n")
 	web.Run(port)
 }
