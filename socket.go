@@ -152,7 +152,7 @@ func requestVersion() {
 
 func checkVersion(ver string) {
 	res := gosemver.Compare(MIN_SCHUMIX_VERSION, ver)
-	if res == 0 || res == 1 {
+	if res == 0 || res == 2 {
 		fmt.Println("[VERSION] Version check OK.")
 		fmt.Println("[VERSION] Webadmin:", VERSION, "Min Schumix:",
 			MIN_SCHUMIX_VERSION, "Schumix connected:", ver)
