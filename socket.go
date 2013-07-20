@@ -25,9 +25,10 @@ import (
 	"net"
 	"strconv"
 	"strings"
+	"time"
 )
 
-const MAX_BUFFER_SIZE = 262144 // 8^6
+const MAX_BUFFER_SIZE = 262144 // 8^6 byte = 256 MB
 const PACKET_SEPARATOR = "|;|"
 
 const (
@@ -46,18 +47,21 @@ const (
 )
 
 var conn net.Conn
-var isConnected bool
+var isConnected = make(chan bool)
+var mHost string
 
 func connectToSocket(host string) {
+	mHost = host
 	fmt.Print("[SOCKET] Connecting to ", host, "...\n")
 	var err error
 	conn, err = net.Dial("tcp", host)
+	go reConnect()
 	if err != nil {
-		isConnected = false
+		isConnected <- false
 		fmt.Println(err)
 		fmt.Println("[SOCKET] Fail.")
 	} else {
-		isConnected = true
+		isConnected <- true
 		fmt.Print("[SOCKET] Done. ")
 		go regConnection()
 		listenToSocket()
@@ -68,7 +72,7 @@ func listenToSocket() {
 	fmt.Printf("Listening...\n")
 	buffer := make([]byte, MAX_BUFFER_SIZE)
 	for {
-		if !isConnected || shutdown {
+		if shutdown {
 			break
 		}
 		n, err := conn.Read(buffer[:])
@@ -76,6 +80,8 @@ func listenToSocket() {
 			fmt.Println(err)
 		}
 		if err == io.EOF {
+			fmt.Println("[SOCKET] Remote server closed connection.")
+			isConnected <- false
 			break
 		}
 		handlePacket(string(buffer[:n]), n)
@@ -97,10 +103,10 @@ func handlePacket(data string, size int) {
 		fmt.Println("Auth request approved.")
 		requestVersion()
 	case SMSG_AUTH_DENIED:
-		isConnected = false
+		isConnected <- false
 		fmt.Println("Auth request denied.")
 	case SMSG_CLOSE_CONNECTION:
-		isConnected = false
+		isConnected <- false
 		fmt.Println("Server sent closing signal. Connection closed.")
 		conn.Close()
 	case SMSG_PING:
@@ -117,12 +123,22 @@ func handlePacket(data string, size int) {
 	fmt.Println("-- END PACKET --")
 }
 
-func shutdownSocket() {
-	if isConnected {
-		fmt.Println("Shutting down socket connection...")
-		sendCloseSignal()
-		conn.Close()
+func reConnect() {
+	for which := range isConnected {
+		if !which {
+			time.Sleep(config["TimeoutInMin"].(time.Duration) * time.Minute)
+			fmt.Println("[SOCET] Reconnecting...")
+			go connectToSocket(mHost)
+		}
 	}
+}
+
+func shutdownSocket() {
+	//if true {
+	fmt.Println("Shutting down socket connection...")
+	sendCloseSignal()
+	conn.Close()
+	//}
 }
 
 func sendPing() {
