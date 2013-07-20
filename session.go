@@ -66,7 +66,7 @@ func HandleDefaultFunc(ctx *web.Context, filename string, filelocation string, t
 			"eq": func(a, b string) bool {
 				return a == b
 			},
-		}).ParseFiles(config["WebDir"].(string)+"/template/header.tpl", config["WebDir"].(string)+"/template/menu.tpl", config["WebDir"].(string)+"/"+filelocation, config["WebDir"].(string)+"/template/footer.tpl")
+		}).ParseFiles(config["WebDir"]+"/template/header.tpl", config["WebDir"]+"/template/menu.tpl", config["WebDir"]+"/"+filelocation, config["WebDir"]+"/template/footer.tpl")
 	p := PageSettings(ctx, title, pagename)
 	t.Execute(ctx, p)
 }
@@ -77,23 +77,23 @@ func HandleFunc(ctx *web.Context, page Page, filename string, filelocation strin
 			"eq": func(a, b string) bool {
 				return a == b
 			},
-		}).ParseFiles(config["WebDir"].(string)+"/template/header.tpl", config["WebDir"].(string)+"/template/menu.tpl", config["WebDir"].(string)+"/"+filelocation, config["WebDir"].(string)+"/template/footer.tpl")
+		}).ParseFiles(config["WebDir"]+"/template/header.tpl", config["WebDir"]+"/template/menu.tpl", config["WebDir"]+"/"+filelocation, config["WebDir"]+"/template/footer.tpl")
 	p := page
 	t.Execute(ctx, p)
 }
 
 func PageSettings(ctx *web.Context, title string, pagename string) Page {
-	return Page{Title: title + " - " + config["Title"].(string), ProjectName: config["ProjectName"].(string), PageName: pagename, SessionValue: getSession(ctx, manager).Value, IsLoggedIn: IsLoggedIn(ctx)}
+	return Page{Title: title + " - " + config["Title"], ProjectName: config["ProjectName"], PageName: pagename, SessionValue: getSession(ctx, manager).Value, IsLoggedIn: IsLoggedIn(ctx)}
 }
 
 func LoginError(ctx *web.Context, message string) {
-	p := Page{Title: "Login" + " - " + config["Title"].(string), Body: message, ProjectName: config["ProjectName"].(string), PageName: "login", SessionValue: nil, Error: true}
+	p := Page{Title: "Login" + " - " + config["Title"], Body: message, ProjectName: config["ProjectName"], PageName: "login", SessionValue: nil, Error: true}
 	HandleFunc(ctx, p, "login.tpl", "login.tpl")
 }
 
 func HomeSuccess(ctx *web.Context, message string) {
 	session := getSession(ctx, manager)
-	p := Page{Title: "Home" + " - " + config["Title"].(string), Body: message, ProjectName: config["ProjectName"].(string), PageName: "home", SessionValue: session.Value, Success: true, IsLoggedIn: IsLoggedIn(ctx)}
+	p := Page{Title: "Home" + " - " + config["Title"], Body: message, ProjectName: config["ProjectName"], PageName: "home", SessionValue: session.Value, Success: true, IsLoggedIn: IsLoggedIn(ctx)}
 	HandleFunc(ctx, p, "index.tpl", "index.tpl")
 }
 

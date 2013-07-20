@@ -40,7 +40,7 @@ func loadServer(port string) {
 	manager.SetTimeout(300)
 
 	web.Config.CookieSecret = "7C19QRmwf3mHZ9CPAaPQ0hsWeufKd"
-	web.Config.StaticDir = config["WebDir"].(string)
+	web.Config.StaticDir = config["WebDir"]
 
 	web.Get("/", func(ctx *web.Context) {
 		session := getSession(ctx, manager)

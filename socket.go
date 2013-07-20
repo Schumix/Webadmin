@@ -126,7 +126,12 @@ func handlePacket(data string, size int) {
 func reConnect() {
 	for which := range isConnected {
 		if !which {
-			time.Sleep(config["TimeoutInMin"].(time.Duration) * time.Minute)
+			mul, err := time.ParseDuration(config["Timeout"])
+			if err != nil {
+				fmt.Println(err)
+				break
+			}
+			time.Sleep(mul)
 			fmt.Println("[SOCET] Reconnecting...")
 			go connectToSocket(mHost)
 		}

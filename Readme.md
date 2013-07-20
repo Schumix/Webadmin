@@ -22,6 +22,10 @@
 
 The configuration file (`config.json`) can be found at the root folder.
 
+* `"Timeout" : "30m"`<br>
+The duration of time which the bot should try to reconnect to the server in case the connection is lost.
+Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".
+
 ### Running
 
 You can run it by:<br>

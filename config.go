@@ -24,7 +24,7 @@ import (
 	"os"
 )
 
-var config map[string]interface{}
+var config map[string]string
 
 func loadConfig() {
 	file, err := os.Open("config.json")

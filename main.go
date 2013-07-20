@@ -36,7 +36,7 @@ func main() {
 	db = connectToSql()
 	defer db.Close()
 	go connectToSocket("localhost:36200")
-	loadServer(":" + config["Port"].(string))
+	loadServer(":" + config["Port"])
 }
 
 func beforeShutdown() {

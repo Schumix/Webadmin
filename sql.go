@@ -28,7 +28,7 @@ var db *sql.DB
 
 func connectToSql() *sql.DB {
 	var err error
-	db, err = sql.Open("sqlite3", config["SQLiteFile"].(string))
+	db, err = sql.Open("sqlite3", config["SQLiteFile"])
 	if err != nil {
 		fmt.Println(err)
 		return nil
