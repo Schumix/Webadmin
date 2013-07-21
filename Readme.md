@@ -29,6 +29,6 @@ Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".
 ### Running
 
 You can run it by:<br>
-`go run *.go`<br>
+`./run.sh`<br>
 Access the site at `localhost:45987` with default port.<br>
 You can change the site's default settings in `config.json`.

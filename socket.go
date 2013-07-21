@@ -47,7 +47,7 @@ const (
 )
 
 var conn net.Conn
-var isConnected = make(chan bool)
+var connectionState = make(chan bool)
 var mHost string
 
 func connectToSocket(host string) {
@@ -57,11 +57,11 @@ func connectToSocket(host string) {
 	conn, err = net.Dial("tcp", host)
 	go reConnect()
 	if err != nil {
-		isConnected <- false
+		connectionState <- false
 		fmt.Println(err)
 		fmt.Println("[SOCKET] Fail.")
 	} else {
-		isConnected <- true
+		connectionState <- true
 		fmt.Print("[SOCKET] Done. ")
 		go regConnection()
 		listenToSocket()
@@ -81,7 +81,7 @@ func listenToSocket() {
 		}
 		if err == io.EOF {
 			fmt.Println("[SOCKET] Remote server closed connection.")
-			isConnected <- false
+			connectionState <- false
 			break
 		}
 		handlePacket(string(buffer[:n]), n)
@@ -103,10 +103,10 @@ func handlePacket(data string, size int) {
 		fmt.Println("Auth request approved.")
 		requestVersion()
 	case SMSG_AUTH_DENIED:
-		isConnected <- false
+		connectionState <- false
 		fmt.Println("Auth request denied.")
 	case SMSG_CLOSE_CONNECTION:
-		isConnected <- false
+		connectionState <- false
 		fmt.Println("Server sent closing signal. Connection closed.")
 		conn.Close()
 	case SMSG_PING:
@@ -124,7 +124,7 @@ func handlePacket(data string, size int) {
 }
 
 func reConnect() {
-	for which := range isConnected {
+	for which := range connectionState {
 		if !which {
 			dur, err := time.ParseDuration(config["Timeout"])
 			if err != nil {
