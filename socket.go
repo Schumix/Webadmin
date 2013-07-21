@@ -48,6 +48,7 @@ const (
 
 var conn net.Conn
 var connectionState = make(chan bool)
+var isConnected bool
 var mHost string
 
 func connectToSocket(host string) {
@@ -72,7 +73,7 @@ func listenToSocket() {
 	fmt.Printf("Listening...\n")
 	buffer := make([]byte, MAX_BUFFER_SIZE)
 	for {
-		if shutdown {
+		if !isConnected || shutdown {
 			break
 		}
 		n, err := conn.Read(buffer[:])
@@ -126,6 +127,7 @@ func handlePacket(data string, size int) {
 func reConnect() {
 	for which := range connectionState {
 		if !which {
+			isConnected = false
 			dur, err := time.ParseDuration(config["Timeout"])
 			if err != nil {
 				fmt.Println(err)
@@ -134,16 +136,18 @@ func reConnect() {
 			time.Sleep(dur)
 			fmt.Println("[SOCET] Reconnecting...")
 			go connectToSocket(mHost)
+		} else {
+			isConnected = true
 		}
 	}
 }
 
 func shutdownSocket() {
-	//if true {
-	fmt.Println("Shutting down socket connection...")
-	sendCloseSignal()
-	conn.Close()
-	//}
+	if isConnected {
+		fmt.Println("Shutting down socket connection...")
+		sendCloseSignal()
+		conn.Close()
+	}
 }
 
 func sendPing() {
