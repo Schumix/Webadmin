@@ -22,3 +22,6 @@ if [ ! -e $bin ]; then
 fi
 
 mv Webadmin $bin/Webadmin
+cp -rf www $bin/www
+cp config.json $bin/config.json
+cp Schumix.db3 $bin/Schumix.db3
