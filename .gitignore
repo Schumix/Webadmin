@@ -6,6 +6,7 @@
 # Folders
 _obj
 _test
+.gopath
 
 # Architecture specific extensions/prefixes
 *.[568vq]
