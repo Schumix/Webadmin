@@ -4,7 +4,7 @@ sourcedir=`ls -d $PWD`
 gopath="$sourcedir/.gopath"
 bin="bin"
 filename="Webadmin"
-godir="go"
+golangdir="src"
 configdir="configs"
 sqldir="sql"
 
@@ -19,7 +19,7 @@ go get github.com/hoisie/web
 go get github.com/mattn/go-session-manager
 go get github.com/Jackneill/gosemver
 
-cd $godir
+cd $golangdir
 go build -o $filename
 cd ..
 
@@ -27,12 +27,12 @@ if [ ! -e $bin ]; then
 	mkdir $bin
 fi
 
-if [ ! -e $godir/$filename ]; then
+if [ ! -e $golangdir/$filename ]; then
 	echo "Build error!"
 	exit
 fi
 
-mv $godir/$filename $bin/$filename
+mv $golangdir/$filename $bin/$filename
 cp -rf www $bin/www
 cp $configdir/config.json $bin/config.json
 cp $sqldir/Schumix.db3 $bin/Schumix.db3
