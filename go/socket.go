@@ -67,6 +67,7 @@ func connectToSocket(host string) {
 		go regConnection()
 		listenToSocket()
 	}
+	defer conn.Close()
 }
 
 func listenToSocket() {
