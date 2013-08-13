@@ -66,8 +66,8 @@ func connectToSocket(host string) {
 		fmt.Print("[SOCKET] Done. ")
 		go regConnection()
 		listenToSocket()
+		defer conn.Close()
 	}
-	defer conn.Close()
 }
 
 func listenToSocket() {
