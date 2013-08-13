@@ -5,14 +5,14 @@ gopath="$sourcedir/.gopath"
 bin="bin"
 
 if [ ! -e $gopath ]; then
-	echo "Not build!"
+	echo "$gopath not found! Run build.sh."
 	exit
 fi
 
 export GOPATH=$gopath
 
 if [ ! -e $bin ]; then
-	echo "Not build!"
+	echo "$bin not found! Run build.sh."
 	exit
 fi
 
