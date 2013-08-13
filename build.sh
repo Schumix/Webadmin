@@ -33,6 +33,6 @@ if [ ! -e $golangdir/$filename ]; then
 fi
 
 mv $golangdir/$filename $bin/$filename
-cp -rf www $bin/www
+cp -uR www $bin/
 cp $configdir/config.json $bin/config.json
 cp $sqldir/Schumix.db3 $bin/Schumix.db3
