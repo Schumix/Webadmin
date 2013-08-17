@@ -162,12 +162,14 @@ func sendPong() {
 }
 
 func sendCloseSignal() {
-	msg := strconv.Itoa(CMSG_CLOSE_CONNECTION) + PACKET_SEPARATOR + "uh. stomachache. shutting down for now." + PACKET_SEPARATOR
+	msg := strconv.Itoa(CMSG_CLOSE_CONNECTION) + PACKET_SEPARATOR +
+		"uh. stomachache. shutting down for now." + PACKET_SEPARATOR
 	fmt.Fprint(conn, msg)
 }
 
 func regConnection() {
-	msg := strconv.Itoa(CMSG_REQUEST_AUTH) + PACKET_SEPARATOR + "schumix webadmin (reg GUID)" + PACKET_SEPARATOR + md5_gen("schumix") + PACKET_SEPARATOR
+	msg := strconv.Itoa(CMSG_REQUEST_AUTH) + PACKET_SEPARATOR +
+		"schumix webadmin (reg GUID)" + PACKET_SEPARATOR + md5_gen("schumix") + PACKET_SEPARATOR
 	fmt.Fprint(conn, msg)
 }
 
