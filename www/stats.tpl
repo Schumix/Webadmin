@@ -8,25 +8,21 @@
         <a class="btn btn-large btn-success" href="https://github.com/Schumix/Webadmin">Get started today</a>
       </div>
 
-      <hr>
-
-      <!-- Example row of columns -->
-      <!--
-      <div class="row-fluid">
-        <div class="span4">
+      <div class="row">
+        <div class="col-lg-4">
           <h2>Admins</h2>
           <p>{{.Body}}</p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
+          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
         </div>
-        <div class="span4">
+        <div class="col-lg-4">
           <h2>Admins</h2>
           <p>{{.Body}}</p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
-       </div>
-        <div class="span4">
-          <h2>Admins</h2>
-          <p>{{.Body}}</p>
-          <p><a class="btn" href="#">View details &raquo;</a></p>
+          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
         </div>
-      </div>-->
+        <div class="col-lg-4">
+          <h2>Admins</h2>
+          <p>{{.Body}}</p>
+          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+        </div>
+      </div>
 {{template "footer" .}}

@@ -1,5 +1,4 @@
 {{define "footer"}}
-      <hr>
 
       <div class="footer">
         <div align="center">
@@ -9,23 +8,12 @@
 
     </div> <!-- /container -->
 
-    <!-- Le javascript
+
+    <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/static/js/jquery.js"></script>
-    <script src="/static/js/bootstrap-transition.js"></script>
-    <script src="/static/js/bootstrap-alert.js"></script>
-    <script src="/static/js/bootstrap-modal.js"></script>
-    <script src="/static/js/bootstrap-dropdown.js"></script>
-    <script src="/static/js/bootstrap-scrollspy.js"></script>
-    <script src="/static/js/bootstrap-tab.js"></script>
-    <script src="/static/js/bootstrap-tooltip.js"></script>
-    <script src="/static/js/bootstrap-popover.js"></script>
-    <script src="/static/js/bootstrap-button.js"></script>
-    <script src="/static/js/bootstrap-collapse.js"></script>
-    <script src="/static/js/bootstrap-carousel.js"></script>
-    <script src="/static/js/bootstrap-typeahead.js"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.js"></script>
   </body>
 </html>
 {{end}}
