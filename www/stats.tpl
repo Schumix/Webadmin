@@ -5,7 +5,6 @@
       <div class="jumbotron">
         <h1>Realtime statistics</h1>
         <p class="lead">Get realtime statistics about the bot</p>
-        <a class="btn btn-large btn-success" href="https://github.com/Schumix/Webadmin">Get started today</a>
       </div>
 
       <div class="row">
