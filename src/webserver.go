@@ -71,19 +71,38 @@ func loadServer(port string) {
 		if userid != "" && password != "" {
 			// find user
 			password = sha1_gen(password)
-			st, _ := db.Prepare("select Name, Password from admins where Name = ? and Password = ? and ServerName = 'rizon'")
-			r, e := st.Query(userid, password)
+
+			st, _ := db.Prepare("select 1 from admins where Name = ? and ServerName = 'rizon'")
+			r, e := st.Query(userid)
+
 			if e != nil {
 				logger.Print(e)
 				return
 			}
+
 			if !r.Next() {
 				// not found
 				LoginError(ctx, "User not found!")
 				return
 			}
+
+			st, _ = db.Prepare("select Name, Password from admins where Name = ? and Password = ? and ServerName = 'rizon'")
+			r, e = st.Query(userid, password)
+
+			if e != nil {
+				logger.Print(e)
+				return
+			}
+
+			if !r.Next() {
+				// Password error
+				LoginError(ctx, "Password error!")
+				return
+			}
+
 			var userid, password string
 			e = r.Scan(&userid, &password)
+
 			if e != nil {
 				logger.Print(e)
 				return
@@ -99,10 +118,12 @@ func loadServer(port string) {
 			LoginError(ctx, "Username is missing!")
 			return
 		}
+
 		if userid != "" && password == "" {
 			LoginError(ctx, "Password is missing!")
 			return
 		}
+
 		if userid == "" && password == "" {
 			LoginError(ctx, "Username and password are missing!")
 			return
