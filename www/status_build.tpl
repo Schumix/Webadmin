@@ -14,13 +14,22 @@
             <div class="col-lg-6">
               <table class="table table-hover table-bordered">
                 <tr class="field-label active">
-                  <td class="field-label active">Master</td>
+                  <td class="field-label active">
+                    <b>Master</b>
+                  </td>
                 </tr>
                 <tr>
-                  <td>Platform</td>
-                  <td>Configuration</td>
-                  <td>Build status</td>
-                  <td>Downloads</td>
+                  <td>
+                    <b>Platform</b></td>
+                  <td>
+                    <b>Configuration</b>
+                  </td>
+                  <td>
+                    <b>Build status</b>
+                  </td>
+                  <td>
+                    <b>Downloads</b>
+                  </td>
                 </tr>
                 <tr>
                   <td>Ubuntu</td>
@@ -43,13 +52,22 @@
             <div class="col-lg-6">
               <table class="table table-hover table-bordered">
                 <tr>
-                  <td class="field-label active">Stable</td>
+                  <td class="field-label active">
+                    <b>Stable</b>
+                  </td>
                 </tr>
                 <tr>
-                  <td>Platform</td>
-                  <td>Configuration</td>
-                  <td>Build status</td>
-                  <td>Downloads</td>
+                  <td>
+                    <b>Platform</b></td>
+                  <td>
+                    <b>Configuration</b>
+                  </td>
+                  <td>
+                    <b>Build status</b>
+                  </td>
+                  <td>
+                    <b>Downloads</b>
+                  </td>
                 </tr>
                 <tr>
                   <td>Ubuntu</td>
