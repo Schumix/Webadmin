@@ -1,4 +1,4 @@
-# Schumix Webadmin
+# Schumix Webadmin [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/Schumix/webadmin/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 #### LICENCE: GNU LGPL 3
 
