@@ -1,6 +1,26 @@
 {{define "menu"}}
       <div class="masthead">
-        <h3 class="text-muted">{{.ProjectName}}</h3>
+        <div class="row">
+            <h3 class="text-muted col-lg-3">{{.ProjectName}}</h3>
+
+            <div class="col-lg-3" style="float:right;">
+              <form action="/serverlist" id="serverform">
+                <div class="input-group">
+                  <select name="list" form="serverform" class="form-control">
+                    <option value="rizon">Rizon</option>
+                    <option value="teszt">Teszt</option>
+                    <option value="teszt2">Teszt2</option>
+                    <option value="teszt3">Teszt3</option>
+                  </select>
+
+                  <div class="input-group-btn">
+                    <input type="submit" class="btn btn-default" value="Submit">
+                  </div>
+                </div>
+              </form>
+            </div>
+        </div>
+
         <ul class="nav nav-justified">
           <li{{ if eq .PageName "home" }} class="active"{{ end }}><a href="/">Home</a></li>
           <li{{ if eq .PageName "stats" }} class="active"{{ end }}><a href="/stats">Statistics</a></li>
