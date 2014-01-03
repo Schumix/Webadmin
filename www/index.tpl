@@ -16,18 +16,18 @@
       </div>
 
       <div class="row">
-        <div class="col-lg-4">
+        <div class="col-xs-6 col-sm-4 col-lg-4">
           <h2>Multifunctional bot</h2>
           <p>More irc servers at a time</p>
         </div>
-        <div class="col-lg-4">
+        <div class="col-xs-6 col-sm-4 col-lg-4">
           <h2>Built-in addon system</h2>
           <p>
             C# compiler, Calendar and many more addons<br>
             Create your own addon easily with the API
           </p>
        </div>
-        <div class="col-lg-4">
+        <div class="col-xs-6 col-sm-4 col-lg-4">
           <h2>Settings</h2>
           <p>Edit the bot's settings easily in the console</p>
         </div>
