@@ -4,9 +4,9 @@
             <h3 class="text-muted col-lg-3">{{.ProjectName}}</h3>
 
             <div class="col-lg-3" style="float:right;">
-              <form action="/serverlist" id="serverform">
+              <form action="{{.PageName}}" id="serverlist">
                 <div class="input-group">
-                  <select name="list" form="serverform" class="form-control">
+                  <select name="server_change" form="serverlist" class="form-control">
                     <option value="rizon">Rizon</option>
                     <option value="teszt">Teszt</option>
                     <option value="teszt2" selected>Teszt2</option>
