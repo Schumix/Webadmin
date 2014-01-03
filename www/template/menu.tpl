@@ -9,7 +9,7 @@
                   <select name="list" form="serverform" class="form-control">
                     <option value="rizon">Rizon</option>
                     <option value="teszt">Teszt</option>
-                    <option value="teszt2">Teszt2</option>
+                    <option value="teszt2" selected>Teszt2</option>
                     <option value="teszt3">Teszt3</option>
                   </select>
 
