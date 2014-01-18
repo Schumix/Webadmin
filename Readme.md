@@ -13,10 +13,10 @@
 	You can change `~/.gopath` to whatever you want.<br>
 
 ### Packages
-* SQLite go binding:    `go get github.com/mattn/go-sqlite3`
+* SQLite go binding:    `go get github.com/Schumix/go-sqlite3`
+* Go version comparer:	`go get github.com/Schumix/gosemver`
 * Backend web services: `go get github.com/hoisie/web`
 * Session manager:      `go get github.com/mattn/go-session-manager`
-* Go version comparer:	`go get github.com/Jackneill/gosemver`
 
 ### Configuration
 

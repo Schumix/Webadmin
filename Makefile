@@ -10,10 +10,10 @@ webadmin:
 
 dep:
 	# todo: check for $GOPATH, if not exists create it
-	go get github.com/mattn/go-sqlite3
+	go get github.com/Schumix/go-sqlite3
+	go get github.com/Schumix/gosemver
 	go get github.com/hoisie/web
 	go get github.com/mattn/go-session-manager
-	go get github.com/Jackneill/gosemver
 
 rebuild: clean all
 
