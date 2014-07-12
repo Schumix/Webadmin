@@ -43,7 +43,7 @@
                   <td>Windows</td>
                   <td>Debug</td>
                   <td>
-                    <a href="https://ci.appveyor.com/project/Schumix2"><img src="https://ci.appveyor.com/api/projects/status?id=u8njmbb6ivqisgiu"></a>
+                    <a href="https://ci.appveyor.com/project/megax/Schumix2"><img src="https://ci.appveyor.com/api/projects/status/u8njmbb6ivqisgiu/branch/master"></a>
                   </td>
                   <td>None</td>
                 </tr>
@@ -81,7 +81,7 @@
                   <td>Windows</td>
                   <td>Debug</td>
                   <td>
-                    <a href="https://ci.appveyor.com/project/Schumix2-stable"><img src="https://ci.appveyor.com/api/projects/status?id=pjsrmeh2utc2100w"></a>
+                    <a href="https://ci.appveyor.com/project/megax/Schumix2"><img src="https://ci.appveyor.com/api/projects/status/u8njmbb6ivqisgiu/branch/stable"></a>
                   </td>
                   <td>None</td>
                 </tr>
