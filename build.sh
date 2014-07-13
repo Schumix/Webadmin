@@ -15,7 +15,7 @@ fi
 export GOPATH=$gopath
 
 go get github.com/Schumix/go-sqlite3
-go get github.com/Schumix/gosemver
+go get github.com/Schumix/semver
 go get github.com/hoisie/web
 go get github.com/mattn/go-session-manager
 

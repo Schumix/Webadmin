@@ -20,7 +20,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/Jackneill/gosemver"
+	"github.com/Schumix/semver"
 	"io"
 	"net"
 	"strconv"
@@ -179,11 +179,13 @@ func requestVersion() {
 }
 
 func checkVersion(ver string) {
-	res := gosemver.Compare(MIN_SCHUMIX_VERSION, ver)
-	if res == 0 || res == 2 {
+	v1, _ := semver.New(MIN_SCHUMIX_VERSION)
+	v2, _ := semver.New(ver)
+
+	if v2.Compare(v1) == 0 || v2.Compare(v1) == 1 {
 		fmt.Println("Version check OK.")
 		fmt.Println("[VERSION] Webadmin:", VERSION, "Min Schumix:",
-			MIN_SCHUMIX_VERSION, "Schumix connected:", ver)
+			MIN_SCHUMIX_VERSION, "Schumix connected:", v2)
 	} else {
 		fmt.Println("Schumix version is too low...")
 		shutdownSocket()
