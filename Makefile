@@ -12,4 +12,4 @@ $(TARGETNAME):
 clean:
 	rm -rf build
 
-.PHONY = all webadmin clean
+.PHONY: all webadmin clean
