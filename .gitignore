@@ -8,6 +8,7 @@ _obj
 _test
 .gopath
 bin
+build
 
 # Architecture specific extensions/prefixes
 *.[568vq]

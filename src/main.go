@@ -20,6 +20,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-gonic/gin"
 	"os"
 	"os/signal"
 )
@@ -32,11 +33,45 @@ var shutdown bool
 func main() {
 	shutdown = false
 	go beforeShutdown()
-	loadConfig()
-	db = connectToSql()
-	defer db.Close()
-	go connectToSocket("localhost:36200")
-	loadServer(":" + config["Port"])
+
+	r := gin.Default()
+	r.Static("/static", "www/static")
+	r.LoadHTMLFiles("www/template/footer.tpl", "www/template/header.tpl",
+		"www/template/menu.tpl", "www/index.tpl", "www/about.tpl", "www/login.tpl",
+		"www/stats.tpl", "www/status.tpl", "www/status_build.tpl")
+
+	r.GET("/", GET_index)
+	r.GET("/about", GET_about)
+	r.GET("/stats", GET_stats)
+	r.GET("/status", GET_status)
+	r.GET("/status-build", GET_status_build)
+	r.GET("/login", GET_login)
+
+	r.Run(":8080")
+}
+
+func GET_index(ctx *gin.Context) {
+	ctx.HTML(200, "index.tpl", nil)
+}
+
+func GET_about(ctx *gin.Context) {
+	ctx.HTML(200, "about.tpl", nil)
+}
+
+func GET_stats(ctx *gin.Context) {
+	ctx.HTML(200, "stats.tpl", nil)
+}
+
+func GET_status(ctx *gin.Context) {
+	ctx.HTML(200, "status.tpl", nil)
+}
+
+func GET_status_build(ctx *gin.Context) {
+	ctx.HTML(200, "status_build.tpl", nil)
+}
+
+func GET_login(ctx *gin.Context) {
+	ctx.HTML(200, "login.tpl", nil)
 }
 
 func beforeShutdown() {
@@ -45,6 +80,5 @@ func beforeShutdown() {
 	s := <-c
 	fmt.Println("Got signal:", s)
 	shutdown = true
-	shutdownSocket()
 	os.Exit(1)
 }

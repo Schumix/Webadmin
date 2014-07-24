@@ -1,6 +1,7 @@
 # Schumix Webadmin [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/Schumix/webadmin/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 #### LICENCE: GNU LGPL 3
+#### AUTHORS: See `AUTHORS` file.
 
 ## Required packages/programs for compilation/running without building
 * `go` programming language<br>
@@ -30,5 +31,5 @@ Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".
 
 You can run it by:<br>
 `./run.sh`<br>
-Access the site at `localhost:45987` with default port.<br>
+Access the site at `localhost:8080` with default port.<br>
 You can change the site's default settings in `config.json`.
