@@ -1,7 +1,7 @@
 # Schumix Webadmin [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/Schumix/webadmin/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 #### LICENCE: GNU LGPL 3
-#### AUTHORS: See `AUTHORS` file.
+#### AUTHORS: See `Authors` file.
 
 ## Required packages/programs for compilation/running without building
 * `go` programming language<br>
