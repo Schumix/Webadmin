@@ -14,10 +14,7 @@
 	You can change `~/.gopath` to whatever you want.<br>
 
 ### Packages
-* SQLite go binding:    `go get github.com/Schumix/go-sqlite3`
-* Go version comparer:	`go get github.com/Schumix/gosemver`
-* Backend web services: `go get github.com/hoisie/web`
-* Session manager:      `go get github.com/mattn/go-session-manager`
+* Go version comparer:	`go get -u github.com/Schumix/gosemver`
 
 ### Configuration
 
@@ -31,5 +28,4 @@ Valid time units are "ns", "us" (or "µs"), "ms", "s", "m", "h".
 
 You can run it by:<br>
 `./run.sh`<br>
-Access the site at `localhost:8080` with default port.<br>
-You can change the site's default settings in `config.json`.
+Access the site at `localhost:8080` with default port.

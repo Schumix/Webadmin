@@ -1,7 +1,5 @@
 {{template "header" .}}
 	{{template "menu" .}}
-{{if .SessionValue}}
-{{else}}
 	{{if .Error}}
       <div class="alert alert-danger alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -18,5 +16,4 @@
         </label>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
       </form>
-{{end}}
 {{template "footer" .}}
