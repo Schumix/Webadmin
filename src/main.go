@@ -20,7 +20,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/Jackneill/protocol"
+	"github.com/Schumix/Protocol"
 	"github.com/gin-gonic/gin"
 	"io"
 	"net"
